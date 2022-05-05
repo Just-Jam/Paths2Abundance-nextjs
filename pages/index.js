@@ -1,14 +1,11 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
+import Link from 'next/link'
 import { supabase } from '../utils/client'
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 
-export default function Home() {
-
-  const [orgs, setOrgs] = useState([]);
-  const [solutions, setSolutions] = useState([]);
-  const [projects, setProjects] = useState([]);
+export default function Home({ Organizations, Solutions, Projects }) {
 
   const [addOrg, setAddOrg] = useState({
     name: '',
@@ -18,17 +15,9 @@ export default function Home() {
     description: '',
   });
 
-  const fetchOrgs = async () => {
-    let { data: Organizations, error } = await supabase
-    .from('Organizations')
-    .select('*')
-    setOrgs(Organizations)
-    console.log(orgs)
-  }
-
   const addOrgFunction = async () => {
     if(addOrg.name !== '' && addOrg.website !== '' && addOrg.country !== '' && addOrg.description !== '') {
-      let { data: Organizations, error } = await supabase
+      await supabase
       .from('Organizations')
       .insert([
         {
@@ -45,29 +34,16 @@ export default function Home() {
     }
   }
 
-  const fetchSolutions = async () => {
-    let { data: Solutions, error } = await supabase
-    .from('Solutions')
-    .select('*')
-    setSolutions(Solutions)
-  }
-
-  const fetchProjects = async () => {
-    let { data: Projects, error } = await supabase
-    .from('Projects')
-    .select('*')
-    setProjects(Projects)
-  }
-
   useEffect(() => {
-    fetchOrgs();
-    fetchSolutions();
-    fetchProjects();
+    console.log(Organizations)
   },[])
 
   return (
     <div>
       Hallo
+      <li>
+        <Link href="/test">Test Page</Link>
+      </li>
       <button onClick={() => fetchOrgs()}>Fetch Organizations</button>
       <div>
         <form onSubmit={() => addOrgFunction()}>
@@ -94,5 +70,34 @@ export default function Home() {
       </div>
     </div>
   )
+}
+
+export async function getServerSideProps() {
+  const fetchOrgs = async () => {
+    let { data: Organizations, error } = await supabase
+    .from('Organizations')
+    .select('*')
+    return Organizations
+  }
+
+  const fetchSolutions = async () => {
+    let { data: Solutions, error } = await supabase
+    .from('Solutions')
+    .select('*')
+    return Solutions
+  }
+
+  const fetchProjects = async () => {
+    let { data: Projects, error } = await supabase
+    .from('Projects')
+    .select('*')
+    return Projects
+  }
+
+  const Organizations =  await fetchOrgs();
+  const Solutions =  await fetchSolutions();
+  const Projects =  await fetchProjects();
+  
+  return { props: { Organizations, Solutions, Projects } }
 }
 
