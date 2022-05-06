@@ -52,6 +52,15 @@ export default function Home({ Organizations, Solutions, Projects }) {
     console.log("Paired Account: ", saveData.pairedAccounts)
     console.log("Paired Walletdata: ", saveData.pairedWalletData)
     console.log("Topic: ", saveData.topic)
+
+    connectToWallet();
+  }
+
+  const connectToWallet = async () => {
+    hashconnect.pairingEvent.once((pairingData) => {
+      console.log("Pairing Data: ", pairingData)
+      saveData.pairedAccounts[0] = pairingData.accountIds[0];
+    })
   }
 
   const addOrgFunction = async () => {
@@ -74,7 +83,7 @@ export default function Home({ Organizations, Solutions, Projects }) {
   }
 
   useEffect(() => {
-    console.log(Organizations)
+    
   },[])
 
   return (
