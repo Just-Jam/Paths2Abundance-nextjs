@@ -3,9 +3,27 @@ import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import Link from 'next/link'
 import { supabase } from '../utils/client'
+import { HashConnect } from 'hashconnect'
 import { useEffect, useState, useCallback } from 'react';
 
+
 export default function Home({ Organizations, Solutions, Projects }) {
+
+  let hashconnect = new HashConnect();
+
+  let saveData = {
+    topic: "",
+    pairingString: "",
+    privateKey: "",
+    pairedWalletData: null,
+    pairedAccounts: []
+  }
+
+  let appMetadata = {
+    name: "Paths2Abundance",
+    description: "Paths2Abundance",
+    icon: "https://paths2abundance.com/favicon.ico",
+  }
 
   const [addOrg, setAddOrg] = useState({
     name: '',
@@ -14,6 +32,27 @@ export default function Home({ Organizations, Solutions, Projects }) {
     active: false,
     description: '',
   });
+
+  const initHashconnect = async () => {
+    //first init and store the private for later
+    let initData = await hashconnect.init(appMetadata);
+    saveData.privateKey = initData.privKey;
+
+    //then connect, storing the new topic for later
+    const state = await hashconnect.connect();
+    saveData.topic = state.topic;
+    
+    //generate a pairing string, which you can display and generate a QR code from
+    saveData.pairingString = hashconnect.generatePairingString(state, "testnet", true);
+    
+    //find any supported local wallets
+    hashconnect.findLocalWallets();
+
+    console.log("Pairing String: ", saveData.pairingString)
+    console.log("Paired Account: ", saveData.pairedAccounts)
+    console.log("Paired Walletdata: ", saveData.pairedWalletData)
+    console.log("Topic: ", saveData.topic)
+  }
 
   const addOrgFunction = async () => {
     if(addOrg.name !== '' && addOrg.website !== '' && addOrg.country !== '' && addOrg.description !== '') {
@@ -44,7 +83,7 @@ export default function Home({ Organizations, Solutions, Projects }) {
       <li>
         <Link href="/test">Test Page</Link>
       </li>
-      <button onClick={() => fetchOrgs()}>Fetch Organizations</button>
+      <button onClick={() => initHashconnect()}>Connect Wallet</button>
       <div>
         <form onSubmit={() => addOrgFunction()}>
           <label>
