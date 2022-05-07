@@ -107,6 +107,9 @@ export default function Home({ Organizations, Solutions, Projects }) {
       <li>
         <Link href="/test">Test Page</Link>
       </li>
+      <li>
+        <Link href="/solutions">Solutions</Link>
+      </li>
       <button onClick={() => initHashconnect()}>Connect Wallet</button>
       <button onClick={() => getBalance()}>Get Balance</button>
       <div>

@@ -1,5 +1,7 @@
 import { useEffect } from "react";
 import { supabase } from "../../utils/client";
+import router from "next/router";
+import Link from 'next/link'
 
 export default function Solutions({ Organizations, Solutions, Projects }){
 
@@ -11,10 +13,16 @@ export default function Solutions({ Organizations, Solutions, Projects }){
             <h1>Solution {Solutions[0].id}: </h1>
             <h2>{Solutions[0].name}</h2>
             <h3>{Solutions[0].summary}</h3>
+            <button type="button" onClick={() => router.push('/solutions/1')}>
+              Solution 1
+            </button>
 
             <h1>Solution {Solutions[1].id}</h1>
             <h2>{Solutions[1].name}</h2>
             <h3>{Solutions[1].summary}</h3>
+            <button type="button" onClick={() => router.push('/solutions/2')}>
+              Solution 2
+            </button>
 
         </div>
     )
@@ -47,4 +55,4 @@ export async function getServerSideProps() {
     const Projects =  await fetchProjects();
     
     return { props: { Organizations, Solutions, Projects } }
-  }
+}
