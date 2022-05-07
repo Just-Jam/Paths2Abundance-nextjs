@@ -17,13 +17,20 @@ export default function Solution({ solutionData }){
     useEffect(() => {
         console.log(solutionData)
     },[])
-    return(
-        <div>
-            <h1>Solution {solutionId}: </h1>
-            <h2>{solutionData[0].name}</h2>
-            <h3>{solutionData[0].summary}</h3>
-        </div>
-    )
+    
+    if(solutionData[0]){
+        return (
+            <div>
+                <h1>Solution {solutionId}</h1>
+                <h2>{solutionData[0].name}</h2>
+                <p>{solutionData[0].summary}</p>
+            </div>
+        )
+    } else {
+        return (
+            <div> Solution not found </div>
+        )
+    }
 }
 
 export async function getServerSideProps(context) {
