@@ -19,7 +19,7 @@ export default function Home({ Organizations, Solutions, Projects }) {
     pairedAccounts: []
   }
 
-  let appMetadata = {
+  const appMetadata = {
     name: "Paths2Abundance",
     description: "Paths2Abundance",
     icon: "https://paths2abundance.com/favicon.ico",
@@ -49,18 +49,31 @@ export default function Home({ Organizations, Solutions, Projects }) {
     hashconnect.findLocalWallets();
 
     console.log("Pairing String: ", saveData.pairingString)
-    console.log("Paired Account: ", saveData.pairedAccounts)
-    console.log("Paired Walletdata: ", saveData.pairedWalletData)
-    console.log("Topic: ", saveData.topic)
+    // console.log("Paired Account: ", saveData.pairedAccounts)
+    // console.log("Paired Walletdata: ", saveData.pairedWalletData)
+    // console.log("Topic: ", saveData.topic)
 
     connectToWallet();
   }
 
   const connectToWallet = async () => {
     hashconnect.pairingEvent.once((pairingData) => {
-      console.log("Pairing Data: ", pairingData)
-      saveData.pairedAccounts[0] = pairingData.accountIds[0];
+      //example
+      pairingData.accountIds.forEach(id => {
+          if(saveData.pairedAccounts.indexOf(id) == -1)
+              saveData.pairedAccounts.push(id);
+      })
+      console.log(pairingData)
+      console.log(saveData.pairedAccounts)
     })
+    
+    
+  }
+
+  const getBalance = async () => {
+    let HashConnectProvider = hashconnect.getProvider("testnet", saveData.topic, saveData.pairedAccounts[0])
+    let balance = await HashConnectProvider.getAccountBalance(saveData.pairedAccounts[0]);
+    console.log(balance)
   }
 
   const addOrgFunction = async () => {
@@ -88,11 +101,12 @@ export default function Home({ Organizations, Solutions, Projects }) {
 
   return (
     <div>
-      Hallo
+      Pairing String: {saveData.pairingString}
       <li>
         <Link href="/test">Test Page</Link>
       </li>
       <button onClick={() => initHashconnect()}>Connect Wallet</button>
+      <button onClick={() => getBalance()}>Get Balance</button>
       <div>
         <form onSubmit={() => addOrgFunction()}>
           <label>
