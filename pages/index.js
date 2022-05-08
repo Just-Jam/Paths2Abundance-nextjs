@@ -4,6 +4,7 @@ import styles from '../styles/Home.module.css'
 import Link from 'next/link'
 import { supabase } from '../utils/client'
 import { HashConnect } from 'hashconnect'
+import { hethers } from '@hashgraph/hethers'
 import { useEffect, useState, useCallback } from 'react';
 
 
@@ -96,7 +97,8 @@ export default function Home({ Organizations, Solutions, Projects }) {
   }
 
   useEffect(() => {
-    
+    let hethersProvider = hethers.getDefaultProvider('testnet');
+    console.log(hethersProvider);
   },[])
 
   return (
@@ -104,6 +106,9 @@ export default function Home({ Organizations, Solutions, Projects }) {
       Pairing String: {saveData.pairingString}
       <li>
         <Link href="/test">Test Page</Link>
+      </li>
+      <li>
+        <Link href="/solutions">Solutions</Link>
       </li>
       <button onClick={() => initHashconnect()}>Connect Wallet</button>
       <button onClick={() => getBalance()}>Get Balance</button>
