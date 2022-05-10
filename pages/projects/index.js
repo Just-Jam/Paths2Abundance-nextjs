@@ -13,14 +13,14 @@ export default function Projects({Projects }){
             <h1>Projects {Projects[0].id}: </h1>
             <h2>{Projects[0].status}</h2>
             <h3>{Projects[0].other_info}</h3>
-            <button type="button" onClick={() => router.push('/Projects/1')}>
+            <button type="button" onClick={() => router.push('/projects/1')}>
               Projects 1
             </button>
 
-            <h1>Projects {Projectss[1].id}</h1>
-            <h2>{Projects[1].name}</h2>
-            <h3>{Projects[1].summary}</h3>
-            <button type="button" onClick={() => router.push('/Projects/2')}>
+            <h1>Projects {Projects[1].id}</h1>
+            <h2>{Projects[1].status}</h2>
+            <h3>{Projects[1].other_info}</h3>
+            <button type="button" onClick={() => router.push('/projects/2')}>
               Projects 2
             </button>
 
@@ -29,19 +29,6 @@ export default function Projects({Projects }){
 }
 
 export async function getServerSideProps() {
-    // const fetchOrgs = async () => {
-    //   let { data: Organizations, error } = await supabase
-    //   .from('Organizations')
-    //   .select('*')
-    //   return Organizations
-    // }
-  
-    // const fetchSolutions = async () => {
-    //   let { data: Solutions, error } = await supabase
-    //   .from('Solutions')
-    //   .select('*')
-    //   return Solutions
-    // }
   
     const fetchProjects = async () => {
       let { data: Projects, error } = await supabase
@@ -49,9 +36,7 @@ export async function getServerSideProps() {
       .select('*')
       return Projects
     }
-  
-    //const Organizations =  await fetchOrgs();
-    //const Solutions =  await fetchSolutions();
+
     const Projects =  await fetchProjects();
     
     return { props: {Projects } }

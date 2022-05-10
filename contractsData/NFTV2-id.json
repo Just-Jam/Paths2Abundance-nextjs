@@ -1,0 +1,21 @@
+{
+  "contractID": {
+    "shard": {
+      "low": 0,
+      "high": 0,
+      "unsigned": false
+    },
+    "realm": {
+      "low": 0,
+      "high": 0,
+      "unsigned": false
+    },
+    "num": {
+      "low": 34731702,
+      "high": 0,
+      "unsigned": false
+    },
+    "evmAddress": null,
+    "_checksum": null
+  }
+}
