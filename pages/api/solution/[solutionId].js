@@ -1,10 +1,7 @@
 import { supabase } from "../../../utils/client";
 
 const getSolution = async (solutionId) => {
-    let { data: Solutions, error } = await supabase
-    .from('Solutions')
-    .select('*')
-    .eq('id', solutionId)
+    let { data: Solutions, error } = await supabase.from('Solutions').select('*').eq('id', solutionId)
     return Solutions
 }
 
