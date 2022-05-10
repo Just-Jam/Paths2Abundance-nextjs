@@ -6,6 +6,7 @@ import { supabase } from '../utils/client'
 import { HashConnect } from 'hashconnect'
 import { hethers } from '@hashgraph/hethers'
 import { useEffect, useState, useCallback } from 'react';
+import {createClient} from '@supabase/supabase-js';
 
 
 export default function Home({ Organizations, Solutions, Projects }) {

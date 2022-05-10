@@ -3,7 +3,7 @@ import { supabase } from "../../utils/client";
 import router from "next/router";
 import Link from 'next/link'
 
-export default function Solutions({ Organizations, Solutions, Projects }){
+export default function Solutions({Solutions }){
 
     useEffect(() => {
         console.log(Solutions)
@@ -29,12 +29,12 @@ export default function Solutions({ Organizations, Solutions, Projects }){
 }
 
 export async function getServerSideProps() {
-    const fetchOrgs = async () => {
-      let { data: Organizations, error } = await supabase
-      .from('Organizations')
-      .select('*')
-      return Organizations
-    }
+    // const fetchOrgs = async () => {
+    //   let { data: Organizations, error } = await supabase
+    //   .from('Organizations')
+    //   .select('*')
+    //   return Organizations
+    // }
   
     const fetchSolutions = async () => {
       let { data: Solutions, error } = await supabase
@@ -43,16 +43,16 @@ export async function getServerSideProps() {
       return Solutions
     }
   
-    const fetchProjects = async () => {
-      let { data: Projects, error } = await supabase
-      .from('Projects')
-      .select('*')
-      return Projects
-    }
+    // const fetchProjects = async () => {
+    //   let { data: Projects, error } = await supabase
+    //   .from('Projects')
+    //   .select('*')
+    //   return Projects
+    // }
   
-    const Organizations =  await fetchOrgs();
+    //const Organizations =  await fetchOrgs();
     const Solutions =  await fetchSolutions();
-    const Projects =  await fetchProjects();
+    //const Projects =  await fetchProjects();
     
-    return { props: { Organizations, Solutions, Projects } }
+    return { props: {Solutions } }
 }
