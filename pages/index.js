@@ -60,6 +60,7 @@ export default function Home({ Organizations, Solutions, Projects }) {
       await hashconnect.connect(saveData.topic, saveData.pairedWalletData);
     }
     setUpEvents();
+    console.log("Paring String: ", saveData.pairingString)
   }
 
   const setUpEvents = async () => {
@@ -82,10 +83,10 @@ export default function Home({ Organizations, Solutions, Projects }) {
   }
 
   const loadLocalData = () => {
-    let foundData = localStorgage.getItem("hashconnectData")
+    let foundData = localStorage.getItem("hashconnectData")
     if(foundData){
-      this.saveData = JSON.parse(foundData);
-      console.log("Found local data", this.saveData)
+      saveData = JSON.parse(foundData);
+      console.log("Found local data", saveData)
       return true;
     }
     else return false;
