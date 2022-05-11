@@ -49,7 +49,6 @@ export default function Home({ Organizations, Solutions, Projects }) {
       <li>
         <Link href="/solutions">Solutions</Link>
       </li>
-      <button onClick={() => getBalance()}>Get Balance</button>
       <button onClick={() => mintOrgNFT()}>Mint OrganizationNFT *Only Sam's address</button>
       <div>
         <form onSubmit={() => addOrgFunction()}>

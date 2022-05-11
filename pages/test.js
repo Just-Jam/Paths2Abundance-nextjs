@@ -7,8 +7,8 @@ import {
     ContractCallQuery,
     ContractFunctionParameters,
     AccountId,
-    Client,
     TransferTransaction,
+    Hbar,
 } from '@hashgraph/sdk';
 import { hethers } from '@hashgraph/hethers';
 
@@ -92,44 +92,49 @@ export default function Test({ Projects }) {
         console.log(balance)
     }
 
+    //Works
     const createProjectNFT = async() => {
         console.log("Creating Project NFT")
-        //const client = Client.forTestnet().setOperator(saveData.pairedAccounts[0], saveData.privateKey);
         let provider = hashconnect.getProvider("testnet", saveData.topic, saveData.pairedAccounts[0])
         let signer = hashconnect.getSigner(provider)
         const account1ID = accountIDs.account1.accountId;
         const address = AccountId.fromString(account1ID).toSolidityAddress()
         console.log(address)
-        // const createProjectTx = await new ContractExecuteTransaction()
-        //     .setContractId(`0.0.${NFTID.contractID.num.low}`)
-        //     .setGas(100000)
-        //     .setFunction(
-        //         "createProject", 
-        //         new ContractFunctionParameters()
-        //         .addUint256(10000)
-        //         .addUint256(1000)
-        //         .addString("Project 1")
-        //         .addAddress(address)
-        //     )
-        //     .freezeWithSigner(signer)
+        const createProjectTx = await new ContractExecuteTransaction()
+            .setContractId(`0.0.${NFTID.contractID.num.low}`)
+            .setGas(1000000) //0.45 Hbar
+            .setFunction(
+                "createProject", 
+                new ContractFunctionParameters()
+                    .addUint256(10000)
+                    .addUint256(1000)
+                    .addString("Project 1")
+                    .addAddress(address)
+            )
+            .freezeWithSigner(signer)
         
-        // const submitTx = await createProjectTx.execute(client)
-        // const txReceipt = await submitTx.getReceipt(client)
-        // console.log("Reciept: " , txReceipt)
+        let res = await createProjectTx.executeWithSigner(signer)
+        console.log(res)
     }
 
-    const createProjectNFT2 = async() => {
-        console.log("Initiating Contract...")
-        console.log(saveData.privateKey)
-        let provider = hethers.getDefaultProvider('testnet')
-        //let signer = new hethers.Wallet(saveData.privateKey, provider)
-        console.log("Hethers Provider: ", provider)
-        const contractAbi = NFTABI.abi;
-        const contractAddress = AccountId.fromString(`0.0.${NFTID.contractID.num.low}`).toSolidityAddress()
-
-        // const nftContract = new hethers.Contract(contractAddress, contractAbi, signer);
-
-        // console.log(nftContract)
+    const mintProjectNFT = async(mintAmount) => {
+        console.log("Minting Project NFT")
+        let provider = hashconnect.getProvider("testnet", saveData.topic, saveData.pairedAccounts[0])
+        let signer = hashconnect.getSigner(provider)
+        const mintNFTTx = await new ContractExecuteTransaction()
+            .setContractId(`0.0.${NFTID.contractID.num.low}`)
+            .setGas(1000000) //0.45 Hbar
+            .setFunction(
+                "mint",
+                new ContractFunctionParameters()
+                .addUint256(1)
+                .addUint256(mintAmount)
+            )
+            .setPayableAmount(new Hbar(mintAmount))
+            .freezeWithSigner(signer)
+        
+        let res = mintNFTTx = await mintNFTTx.executeWithSigner(signer)
+        console.log(res)
     }
 
     const hashconnectTx = async() => {
@@ -146,10 +151,6 @@ export default function Test({ Projects }) {
         let res = await trans.executeWithSigner(signer)
         console.log(res)
     }
-
-    const sendTx = async(trans, acctToSign) => {
-        let transactionBytes = await SigningService.signAndMakeBytes(trans);
-    }
     
     return (
         <div>
@@ -161,7 +162,7 @@ export default function Test({ Projects }) {
             <h1>Test Page</h1>
             <button onClick={() => initHashconnect()}>Connect Wallet</button>
             <button onClick={() => hashconnectTx()}>HashConnect Transaction</button>
-            <button onClick={() => createProjectNFT2()}>Create Project NFT</button>
+            <button onClick={() => mintProjectNFT(1)}>Mint 1 Project NFT</button>
         </div>
     )
 }
