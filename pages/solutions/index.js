@@ -3,12 +3,10 @@ import { supabase } from "../../utils/client";
 import router from "next/router";
 import Link from 'next/link'
 
-export default function Solutions({Solutions, Organizations, Projects }){
+export default function Solutions({Solutions }){
 
     useEffect(() => {
         console.log(Solutions)
-        console.log(Projects)
-        console.log(Organizations)
     },[])
     return(
         <div>
@@ -19,13 +17,20 @@ export default function Solutions({Solutions, Organizations, Projects }){
               Solution 1
             </button>
 
-            <h1>Solution {Solutions[1].id}</h1>
-            <h2>{Solutions[1].name}</h2>
-            <h3>{Solutions[1].summary}</h3>
-            <button type="button" onClick={() => router.push('/solutions/2')}>
-              Solution 2
-            </button>
-
+            {Solutions.map(solution => {
+                return (
+                    <div key={solution._id}>
+                    <h1>Start of Solution Here:</h1>
+                    <h2>{solution.name}</h2>
+                    <h2>{solution.category}</h2>
+                    <h2>{solution.nature}</h2>
+                    <h2>{solution.summary}</h2>
+                    <h2>{solution.estimated_cost_usd}</h2>
+                    <h2>{solution.cost_breakdown}</h2>
+                    <h2>{solution.information_source}</h2>
+                    </div>
+                )
+            })}
            
         </div>
         
@@ -34,12 +39,12 @@ export default function Solutions({Solutions, Organizations, Projects }){
 }
 
 export async function getServerSideProps() {
-    const fetchOrgs = async () => {
-      let { data: Organizations, error } = await supabase
-      .from('Organizations')
-      .select('*')
-      return Organizations
-    }
+    // const fetchOrgs = async () => {
+    //   let { data: Organizations, error } = await supabase
+    //   .from('Organizations')
+    //   .select('*')
+    //   return Organizations
+    // }
   
     const fetchSolutions = async () => {
       let { data: Solutions, error } = await supabase
@@ -48,16 +53,16 @@ export async function getServerSideProps() {
       return Solutions
     }
   
-    const fetchProjects = async () => {
-      let { data: Projects, error } = await supabase
-      .from('Projects')
-      .select('*')
-      return Projects
-    }
+    // const fetchProjects = async () => {
+    //   let { data: Projects, error } = await supabase
+    //   .from('Projects')
+    //   .select('*')
+    //   return Projects
+    // }
   
-    const Organizations =  await fetchOrgs();
+    //const Organizations =  await fetchOrgs();
     const Solutions =  await fetchSolutions();
-    const Projects =  await fetchProjects();
+    //const Projects =  await fetchProjects();
     
     return { props: {Solutions } }
 }
