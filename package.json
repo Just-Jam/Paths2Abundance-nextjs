@@ -13,6 +13,7 @@
     "@hashgraph/sdk": "^2.13.1",
     "@openzeppelin/contracts": "^4.6.0",
     "@supabase/supabase-js": "^1.35.3",
+    "dotenv": "^16.0.0",
     "hashconnect": "^0.1.6",
     "https-localhost": "^4.7.1",
     "next": "12.1.6",

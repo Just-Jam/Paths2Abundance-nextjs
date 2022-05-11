@@ -5,7 +5,16 @@ import { HashConnect } from 'hashconnect';
 import { 
     ContractExecuteTransaction,
     ContractCallQuery,
+    ContractFunctionParameters,
+    AccountId,
+    Client,
+    TransferTransaction,
 } from '@hashgraph/sdk';
+import { hethers } from '@hashgraph/hethers';
+
+import NFTABI from '../contractsData/NFTV2.json'
+import NFTID from '../contractsData/NFTV2-id.json'
+import accountIDs from '../accounts.json'
 
 export default function Test({ Projects }) {
     let hashconnect = new HashConnect();
@@ -39,9 +48,10 @@ export default function Test({ Projects }) {
         
         //find any supported local wallets
         hashconnect.findLocalWallets();
+        hashconnect.connectToLocalWallet(saveData.pairingString);
         } else {
-        await hashconnect.init(appMetadata, saveData.privateKey);
-        await hashconnect.connect(saveData.topic, saveData.pairedWalletData);
+            await hashconnect.init(appMetadata, saveData.privateKey);
+            await hashconnect.connect(saveData.topic, saveData.pairedWalletData);
         }
         setUpEvents();
         console.log("Paring String: ", saveData.pairingString)
@@ -83,7 +93,62 @@ export default function Test({ Projects }) {
     }
 
     const createProjectNFT = async() => {
-        const createProjectTx = await new ContractExecuteTransaction()
+        console.log("Creating Project NFT")
+        //const client = Client.forTestnet().setOperator(saveData.pairedAccounts[0], saveData.privateKey);
+        let provider = hashconnect.getProvider("testnet", saveData.topic, saveData.pairedAccounts[0])
+        let signer = hashconnect.getSigner(provider)
+        const account1ID = accountIDs.account1.accountId;
+        const address = AccountId.fromString(account1ID).toSolidityAddress()
+        console.log(address)
+        // const createProjectTx = await new ContractExecuteTransaction()
+        //     .setContractId(`0.0.${NFTID.contractID.num.low}`)
+        //     .setGas(100000)
+        //     .setFunction(
+        //         "createProject", 
+        //         new ContractFunctionParameters()
+        //         .addUint256(10000)
+        //         .addUint256(1000)
+        //         .addString("Project 1")
+        //         .addAddress(address)
+        //     )
+        //     .freezeWithSigner(signer)
+        
+        // const submitTx = await createProjectTx.execute(client)
+        // const txReceipt = await submitTx.getReceipt(client)
+        // console.log("Reciept: " , txReceipt)
+    }
+
+    const createProjectNFT2 = async() => {
+        console.log("Initiating Contract...")
+        console.log(saveData.privateKey)
+        let provider = hethers.getDefaultProvider('testnet')
+        //let signer = new hethers.Wallet(saveData.privateKey, provider)
+        console.log("Hethers Provider: ", provider)
+        const contractAbi = NFTABI.abi;
+        const contractAddress = AccountId.fromString(`0.0.${NFTID.contractID.num.low}`).toSolidityAddress()
+
+        // const nftContract = new hethers.Contract(contractAddress, contractAbi, signer);
+
+        // console.log(nftContract)
+    }
+
+    const hashconnectTx = async() => {
+        let provider = hashconnect.getProvider("testnet", saveData.topic, saveData.pairedAccounts[0])
+        let signer = hashconnect.getSigner(provider)
+
+        console.log("Hashconnect Provider: ", provider)
+        console.log("Hashconnect Signer: ", signer)
+
+        let trans = await new TransferTransaction()
+            .addHbarTransfer(AccountId.fromString(saveData.pairedAccounts[0]), -1)
+            .addHbarTransfer(AccountId.fromString("0.0.34223374"), 1)
+            .freezeWithSigner(signer)
+        let res = await trans.executeWithSigner(signer)
+        console.log(res)
+    }
+
+    const sendTx = async(trans, acctToSign) => {
+        let transactionBytes = await SigningService.signAndMakeBytes(trans);
     }
     
     return (
@@ -95,16 +160,10 @@ export default function Test({ Projects }) {
             </li>
             <h1>Test Page</h1>
             <button onClick={() => initHashconnect()}>Connect Wallet</button>
+            <button onClick={() => hashconnectTx()}>HashConnect Transaction</button>
+            <button onClick={() => createProjectNFT2()}>Create Project NFT</button>
         </div>
     )
-}
-
-const getProject = async (projectId) => {
-    let { data: Projects, error } = await supabase
-    .from('Projects')
-    .select('*')
-    .eq('id', projectId)
-    return Projects
 }
 
 export async function getServerSideProps() {
