@@ -23,7 +23,9 @@ export default function Project({ projectData }){
             <div>
                 <h1>Solution {projectId}</h1>
                 <h2>{projectData[0].status}</h2>
+                <p>{projectData[0].other_info}</p>
                 <p>{projectData[0].solution_id}</p>
+                <p>{projectData[0].organization_id}</p>
             </div>
         )
     } else {

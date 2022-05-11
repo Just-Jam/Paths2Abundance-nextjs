@@ -12,14 +12,18 @@ export default function Projects({Projects }){
         <div>
             <h1>Projects {Projects[0].id}: </h1>
             <h2>{Projects[0].status}</h2>
-            <h3>{Projects[0].other_info}</h3>
+            <p>{Projects[0].other_info}</p>
+            <p>{Projects[0].solution_id}</p>
+            <p>{Projects[0].organization_id}</p>
             <button type="button" onClick={() => router.push('/projects/1')}>
               Projects 1
             </button>
 
             <h1>Projects {Projects[1].id}</h1>
             <h2>{Projects[1].status}</h2>
-            <h3>{Projects[1].other_info}</h3>
+            <p>{Projects[1].other_info}</p>
+            <p>{Projects[1].solution_id}</p>
+            <p>{Projects[1].organization_id}</p>
             <button type="button" onClick={() => router.push('/projects/2')}>
               Projects 2
             </button>
@@ -41,3 +45,4 @@ export async function getServerSideProps() {
     
     return { props: {Projects } }
 }
+
