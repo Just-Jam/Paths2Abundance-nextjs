@@ -1,51 +1,29 @@
 import { useEffect } from "react";
 import { supabase } from "../../utils/client";
 import router from "next/router";
-import Link from 'next/link'
-
-
 
 export default function Projects({ Projects }){
 
     useEffect(() => {
         console.log(Projects)
-        //console.log(Solutions)
-        //console.log(Organizations)
-        
     },[])
+
     return(
         <div>
-            {/* <h1>Projects {Projects[0].id}: </h1>
-            <h2>{Projects[0].status}</h2>
-            <p>{Projects[0].other_info}</p>
-            <p>{Projects[0].solution_id}</p>
-            <p>{Projects[0].organization_id}</p>
-            <button type="button" onClick={() => router.push('/projects/1')}>
-              Projects 1
-            </button> */}
-
             {Projects.map(project => {
                 return (
-                    <div key={project._id}>
-                    <h1>Start of Project Here:</h1>
-                    <h2>{project.solution_id}</h2>
-                    <h2>{project.organization_id}</h2>
-                    <h2>{project.budget_usd}</h2>
-                    <h2>{project.country}</h2>
-                    <h2>{project.project_duration_days}</h2>
-                    <h2>{project.status}</h2>
-                    <h3>Corresponding Solution name Here:</h3>
-                    <h2>{project.Solutions.name}</h2>
-                    <h1>Corresponding Organizations name Here:</h1>
-                    <h2>{project.Organizations.name}</h2>
-                    
-                    
+                    <div key={project.id}>
+                      <h1><b>{project.Solutions.name} in {project.country}</b></h1>
+                      <h2>Budget USD: {project.budget_usd}</h2>
+                      <h2>Duration: {project.project_duration_days} days</h2>
+                      <h2>Status: {project.status}</h2>
+                      <h2>Organization: {project.Organizations.name}</h2>
+                      <h2>Project Id: {project.id}</h2>
+                      <button type="button" onClick={() => router.push(`/projects/${project.id}`)}>Donate now</button>
+                      <br></br>
                     </div>
                 )
             })}
-
-            
-
         </div>
     )
 }
@@ -68,16 +46,18 @@ export async function getServerSideProps() {
   const fetchProjects = async () => {
     let { data: Projects, error } = await supabase
     .from('Projects')
-    .select(`solution_id,
-    organization_id,
-    budget_usd,
-    country,
-    project_duration_days,
-    status,
-    Solutions(name),
-    Organizations(name)
-
+    .select(`
+      id,
+      solution_id,
+      organization_id,
+      budget_usd,
+      country,
+      project_duration_days,
+      status,
+      Solutions(name),
+      Organizations(name)
     `)
+    .order('id', { ascending: true})
 
     console.log(Projects)
     return Projects

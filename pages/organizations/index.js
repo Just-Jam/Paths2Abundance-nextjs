@@ -3,9 +3,6 @@ import { supabase } from "../../utils/client";
 import router from "next/router";
 import Link from 'next/link'
 
-
-
-
 export default function Organizations({ Organizations }) {
 
     useEffect(() => {

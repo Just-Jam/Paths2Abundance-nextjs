@@ -3,29 +3,29 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 
 const getProject = async (projectId) => {
-    let { data: Projects, error } = await supabase
+    let { data: project, error } = await supabase
     .from('Projects')
     .select('*')
     .eq('id', projectId)
-    return Projects
+    return project
 }
 
-export default function Project({ projectData }){
+export default function Project({ project }){
     const router = useRouter();
     const { projectId } = router.query;
 
     useEffect(() => {
-        console.log(projectData)
+        console.log(project)
     },[])
     
-    if(projectData[0]){
+    if(project[0]){
         return (
             <div>
                 <h1>Solution {projectId}</h1>
-                <h2>{projectData[0].status}</h2>
-                <p>{projectData[0].other_info}</p>
-                <p>{projectData[0].solution_id}</p>
-                <p>{projectData[0].organization_id}</p>
+                <h2>{project[0].status}</h2>
+                <p>{project[0].other_info}</p>
+                <p>{project[0].solution_id}</p>
+                <p>{project[0].organization_id}</p>
             </div>
         )
     } else {
@@ -37,9 +37,9 @@ export default function Project({ projectData }){
 
 export async function getServerSideProps(context) {
 
-    const projectData = await getProject(context.params.projectId)
+    const project = await getProject(context.params.projectId)
 
     return {
-        props: { projectData }, // will be passed to the page component as props
+        props: { project }, // will be passed to the page component as props
     }
 }
