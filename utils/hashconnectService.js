@@ -101,7 +101,7 @@ const createProjectNFT = async() => {
     console.log(res)
 }
 
-const mintProjectNFT = async(mintAmount) => {
+const mintProjectNFT2 = async(mintAmount) => {
     console.log("Minting Project NFT")
     let provider = hashconnect.getProvider("testnet", saveData.topic, saveData.pairedAccounts[0])
     let signer = hashconnect.getSigner(provider)
@@ -121,6 +121,26 @@ const mintProjectNFT = async(mintAmount) => {
     console.log(res)
 }
 
+const mintProjectNFT = async(projectId, mintPriceHBAR, mintAmount) => {
+    console.log("Minting Project NFT")
+    let provider = hashconnect.getProvider("testnet", saveData.topic, saveData.pairedAccounts[0])
+    let signer = hashconnect.getSigner(provider)
+    const mintNFTTx = await new ContractExecuteTransaction()
+        .setContractId(`0.0.${NFTID.contractID.num.low}`)
+        .setGas(1000000) //0.45 Hbar
+        .setFunction(
+            "mint",
+            new ContractFunctionParameters()
+            .addUint256(projectId)
+            .addUint256(mintAmount)
+        )
+        .setPayableAmount(new Hbar(mintAmount * mintPriceHBAR))
+        .freezeWithSigner(signer)
+    
+    let res = mintNFTTx = await mintNFTTx.executeWithSigner(signer)
+    console.log(res)
+}
 
 
-export { saveData, appMetadata, initHashconnect, getBalance }
+
+export { saveData, appMetadata, initHashconnect, getBalance, mintProjectNFT }
