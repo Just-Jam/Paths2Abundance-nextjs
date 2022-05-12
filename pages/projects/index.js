@@ -15,14 +15,14 @@ export default function Projects({Solutions, Organizations, Projects }){
     },[])
     return(
         <div>
-            <h1>Projects {Projects[0].id}: </h1>
+            {/* <h1>Projects {Projects[0].id}: </h1>
             <h2>{Projects[0].status}</h2>
             <p>{Projects[0].other_info}</p>
             <p>{Projects[0].solution_id}</p>
             <p>{Projects[0].organization_id}</p>
             <button type="button" onClick={() => router.push('/projects/1')}>
               Projects 1
-            </button>
+            </button> */}
 
             {Projects.map(project => {
                 return (
@@ -31,7 +31,6 @@ export default function Projects({Solutions, Organizations, Projects }){
                     <h2>{project.solution_id}</h2>
                     <h2>{project.organization_id}</h2>
                     <h2>{project.budget_usd}</h2>
-                    <h2>{project.other_info}</h2>
                     <h2>{project.country}</h2>
                     
                     </div>
@@ -62,10 +61,26 @@ export async function getServerSideProps() {
   const fetchProjects = async () => {
     let { data: Projects, error } = await supabase
     .from('Projects')
-    .select('*')
+    .select(`solution_id,
+    organization_id,
+    budget_usd,
+    country,
+    project_duration_days,
+    status
+    `)
+
+    console.log(Projects)
     return Projects
   }
 
+  // const fetchProjects = async () => {
+  //   let { data: Projects, error } = await supabase
+  //   .from('Projects')
+  //   .select('*')
+    
+  //   return Projects
+  // }
+  
   const Organizations =  await fetchOrgs();
   const Solutions =  await fetchSolutions();
   const Projects =  await fetchProjects();
