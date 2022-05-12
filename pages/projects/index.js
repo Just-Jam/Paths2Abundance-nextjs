@@ -10,10 +10,7 @@ export default function Projects({ Projects }){
 
     return(
         <div>
-<<<<<<< HEAD
-=======
            
->>>>>>> eb3b5df469ad18b9d6c171694d77046cd7d055c6
             {Projects.map(project => {
                 return (
                     <div key={project.id}>
@@ -50,7 +47,6 @@ export async function getServerSideProps() {
   const fetchProjects = async () => {
     let { data: Projects, error } = await supabase
     .from('Projects')
-<<<<<<< HEAD
     .select(`
       id,
       solution_id,
@@ -61,26 +57,12 @@ export async function getServerSideProps() {
       status,
       Solutions(name),
       Organizations(name)
-=======
-    .select(`*,
-    Solutions(name),
-    Organizations(name)
-
->>>>>>> eb3b5df469ad18b9d6c171694d77046cd7d055c6
     `)
     .order('id', { ascending: true})
 
     console.log(Projects)
     return Projects
   }
-
-  // const fetchProjects = async () => {
-  //   let { data: Projects, error } = await supabase
-  //   .from('Projects')
-  //   .select('*')
-    
-  //   return Projects
-  // }
   
   const Organizations =  await fetchOrgs();
   const Solutions =  await fetchSolutions();
