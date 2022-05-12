@@ -51,7 +51,6 @@ export default function Home({ Organizations, Solutions, Projects }) {
 
   return (
     <>
-    <Navbar initHashconnect={initHashconnect} saveData={saveData}/>
     <Hero/>
     </>
   )
