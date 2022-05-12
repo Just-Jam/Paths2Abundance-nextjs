@@ -14,16 +14,19 @@
     "@heroicons/react": "^1.0.6",
     "@openzeppelin/contracts": "^4.6.0",
     "@supabase/supabase-js": "^1.35.3",
+    "autoprefixer": "^10.4.7",
     "dotenv": "^16.0.0",
     "hashconnect": "^0.1.6",
     "https-localhost": "^4.7.1",
     "next": "12.1.6",
     "next-compose-plugins": "^2.2.1",
     "next-transpile-modules": "^9.0.0",
+    "postcss": "^8.4.13",
     "react": "18.1.0",
     "react-dom": "18.1.0",
     "react-scripts": "^5.0.1",
-    "react-scroll": "^1.8.7"
+    "react-scroll": "^1.8.7",
+    "tailwindcss": "^3.0.24"
   },
   "devDependencies": {
     "eslint": "8.14.0",

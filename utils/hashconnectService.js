@@ -123,4 +123,4 @@ const mintProjectNFT = async(mintAmount) => {
 
 
 
-export { saveData, appMetadata, initHashconnect }
+export { saveData, appMetadata, initHashconnect, getBalance }
