@@ -15,15 +15,7 @@ export default function Projects({ Projects }){
     },[])
     return(
         <div>
-            {/* <h1>Projects {Projects[0].id}: </h1>
-            <h2>{Projects[0].status}</h2>
-            <p>{Projects[0].other_info}</p>
-            <p>{Projects[0].solution_id}</p>
-            <p>{Projects[0].organization_id}</p>
-            <button type="button" onClick={() => router.push('/projects/1')}>
-              Projects 1
-            </button> */}
-
+           
             {Projects.map(project => {
                 return (
                     <div key={project._id}>
@@ -68,12 +60,7 @@ export async function getServerSideProps() {
   const fetchProjects = async () => {
     let { data: Projects, error } = await supabase
     .from('Projects')
-    .select(`solution_id,
-    organization_id,
-    budget_usd,
-    country,
-    project_duration_days,
-    status,
+    .select(`*,
     Solutions(name),
     Organizations(name)
 
