@@ -10,7 +10,6 @@ import {
     TransferTransaction,
     Hbar,
 } from '@hashgraph/sdk';
-import { hethers } from '@hashgraph/hethers';
 
 import NFTABI from '../contractsData/NFTV2.json'
 import NFTID from '../contractsData/NFTV2-id.json'
