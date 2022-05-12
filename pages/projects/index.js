@@ -1,9 +1,6 @@
 import { useEffect } from "react";
 import { supabase } from "../../utils/client";
 import router from "next/router";
-import Link from 'next/link'
-
-
 
 export default function Projects({Solutions, Organizations, Projects }){
 
@@ -37,9 +34,6 @@ export default function Projects({Solutions, Organizations, Projects }){
                     </div>
                 )
             })}
-
-            
-
         </div>
     )
 }

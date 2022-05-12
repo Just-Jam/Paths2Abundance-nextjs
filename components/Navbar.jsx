@@ -3,7 +3,7 @@ import { Link } from 'react-scroll'
 
 import { MenuIcon, XIcon } from '@heroicons/react/outline';
 
-const Navbar = () => {
+const Navbar = ({ initHashconnect, saveData }) => {
     const [nav, setNav] = useState(false)
     const handleClick = () => setNav(!nav)
 
@@ -22,7 +22,7 @@ const Navbar = () => {
           </ul>
         </div>
         <div className='hidden md:flex pr-4'>
-          <button className='px-8 py-3'>Connect Wallet</button>
+          <button className='px-8 py-3' onClick={initHashconnect}>Connect Wallet</button>
         </div>
         <div className='md:hidden mr-4' onClick={handleClick}>
             {!nav ? <MenuIcon className='w-5' /> : <XIcon className='w-5' />}
