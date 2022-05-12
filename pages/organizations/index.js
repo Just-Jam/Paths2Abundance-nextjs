@@ -11,13 +11,7 @@ export default function Organizations({ Organizations }) {
 
     return (
         <div>
-            <h1>Organizations {Organizations.id}: </h1>
-            <h2>{Organizations.name}</h2>
-            <h3>{Organizations.website}</h3>
-            <button type="button" onClick={() => router.push('/organizations/1')}>
-                Organizations 1
-            </button>
-
+        
             {Organizations.map(organization => {
                 return (
                     <div key={organization._id}>
