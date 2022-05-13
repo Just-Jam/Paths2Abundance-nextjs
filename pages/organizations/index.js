@@ -26,14 +26,6 @@ export default function Organizations({ Organizations }) {
                     </div>
                 )
             })}
-
-            {/* <h1>Organizations {Organizations[1].id}</h1>
-            <h2>{Organizations[1].name}</h2>
-            <h3>{Organizations[1].website}</h3>
-            <button type="button" onClick={() => router.push('/organizations/2')}>
-            Organizations 2
-            </button> */}
-
         </div>
     )
 }
@@ -43,26 +35,11 @@ export async function getServerSideProps() {
         let { data: Organizations, error } = await supabase
             .from('Organizations')
             .select('*')
+            .order('id', { ascending: true})
         return Organizations
     }
 
-    // const fetchSolutions = async () => {
-    //   let { data: Solutions, error } = await supabase
-    //   .from('Solutions')
-    //   .select('*')
-    //   return Solutions
-    // }
-
-    // const fetchProjects = async () => {
-    //   let { data: Projects, error } = await supabase
-    //   .from('Projects')
-    //   .select('*')
-    //   return Projects
-    // }
-
     const Organizations = await fetchOrgs();
-    //const Solutions =  await fetchSolutions();
-    //const Projects =  await fetchProjects();
 
     return { props: { Organizations } }
 }

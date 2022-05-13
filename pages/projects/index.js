@@ -10,7 +10,6 @@ export default function Projects({ Projects }){
 
     return(
         <div>
-           
             {Projects.map(project => {
                 return (
                     <div key={project.id}>
