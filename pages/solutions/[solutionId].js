@@ -2,79 +2,44 @@ import { supabase } from "../../utils/client";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 
-
-
-export async function getStaticPaths() {
-    const fetchSolutions = async () => {
-        let { data: Solution, error } = await supabase
-        .from('Solutions')
-        .select('*')
-        return Solution
-      }
-      const Solution =  await fetchSolutions();
-      console.log("Here is the solution retrieved")
-      console.log(Solution)
-
-      const paths = Solution.map(solution => {
-          return {
-              params: { solutionId: solution.id.toString() }
-          }
-      })
-      return {
-          paths,
-          fallback: false
-      }
+const getSolution = async (solutionId) => {
+    let { data: Solutions, error } = await supabase
+    .from('Solutions')
+    .select('*')
+    .eq('id', solutionId)
+    return Solutions
 }
 
-export async function getStaticProps(context) {
-    const solutionDataId = context.params.solutionId
-    console.log("This is Solution Data Id")
-    console.log(solutionDataId)
+export default function Solution({ solutionData }){
+    const router = useRouter();
+    const { solutionId } = router.query;
 
-    const fetchSolutionsById = async () => {
-        console.log(solutionDataId)
-        let { data: SolutionById, error } = await supabase
-        .from('Solutions')
-        .select('*')
-        console.log(SolutionById)
-        return SolutionById
-      }
-      const Solution =  await fetchSolutionsById();
-      console.log("Here is the solution retrieved")
-      console.log(Solution)
-
-    return {
-        props: { SolutionData: Solution }, // will be passed to the page component as props
+    useEffect(() => {
+        console.log(solutionData)
+    },[])
+    
+    if(solutionData[0]){
+        return (
+            <div>
+                <h1>Solution {solutionId}</h1>
+                <h2>Name: {solutionData[0].name}</h2>
+                <p>Summary: {solutionData[0].summary}</p>
+            </div>
+        )
+    } else {
+        return (
+            <div> Solution not found </div>
+        )
     }
 }
 
-const Details = () => {
-    return (
-        <div>
-            <h1>Details Page</h1>
-        </div>
-    );
+export async function getServerSideProps(context) {
+
+    const solutionData = await getSolution(context.params.solutionId)
+
+    return {
+        props: { solutionData }, // will be passed to the page component as props
+    }
 }
-
-export default Details;
-
-
-
-// const getSolution = async (solutionId) => {
-//     let { data: Solutions, error } = await supabase
-//     .from('Solutions')
-//     .select('*')
-//     .eq('id', solutionId)
-//     return Solutions
-// }
-
-// export async function getStaticProps(context) {
-//     const solutionData = await getSolution(context.params.solutionId)
-//     console.log("This is Solution Data")
-//     console.log(solutionData)
-//     return {
-//         props: { solutionData }, // will be passed to the page component as props
-//     }
-// }
 
 
