@@ -9,30 +9,24 @@ const getProject = async (projectId) => {
     .select(`*
     `)
     .eq('id', projectId)
-
-    console.log("Project retrieved by ID")
     console.log(project)
     return project
 }
 
-const getSolution = async (projectId) => {
+const getSolution = async (solutionId) => {
     let { data: solution, error } = await supabase
     .from('Solutions')
     .select(`*`)
-    .eq('id', projectId)
-
-    console.log("solution retrieved for project")
+    .eq('id', solutionId)
     console.log(solution)
     return solution
 }
 
-const getOrganization = async (projectId) => {
+const getOrganization = async (organizationId) => {
     let { data: organization, error } = await supabase
     .from('Organizations')
     .select(`*`)
-    .eq('id', projectId)
-
-    console.log("Organization retrieved for project")
+    .eq('id', organizationId)
     console.log(organization)
     return organization
 }
@@ -69,9 +63,9 @@ export async function getServerSideProps(context) {
 
     const project = await getProject(context.params.projectId)
 
-    const solution = await getSolution(context.params.projectId)
+    const solution = await getSolution(project[0].solution_id)
 
-    const organization = await getOrganization(context.params.projectId)
+    const organization = await getOrganization(project[0].organization_id)
 
     return {
         props: { project, solution, organization }, // will be passed to the page component as props

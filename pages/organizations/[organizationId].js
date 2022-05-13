@@ -21,7 +21,7 @@ export default function Organization({ organizationData }){
     if(organizationData[0]){
         return (
             <div>
-                <h1>Solution {organizationId}</h1>
+                <h1>Organization {organizationId}</h1>
                 <h2>{organizationData[0].name}</h2>
                 <p>{organizationData[0].website}</p>
             </div>
