@@ -24,6 +24,8 @@ export default function Organization({ organizationData }){
                 <h1>Organization {organizationId}</h1>
                 <h2>{organizationData[0].name}</h2>
                 <p>{organizationData[0].website}</p>
+                <p>{organizationData[0].country}</p>
+                <p>{organizationData[0].active}</p>
             </div>
         )
     } else {

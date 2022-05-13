@@ -10,7 +10,15 @@ export default function Solutions({ Solutions }){
 
     return (
         <div>
-            <SolutionsComponent Solutions={Solutions}/>
+           {Solutions.map(solution => {
+                return (
+                    <div key={solution._id}>
+                        <h1>Start of Solution Here:</h1>
+                        <h2>{solution.name}</h2>
+                        <h2>{solution.category}</h2>
+                    </div>
+                )
+            })}
         </div>
     )    
 }
