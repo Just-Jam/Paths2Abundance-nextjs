@@ -22,13 +22,11 @@ export default function HbarDisplay({ hbarData }) {
                         <h1>Start of new HBAR token Here:</h1>
                         <p>{hbar.base}</p>
                         <p>{hbar.target}</p>
-                        <p>{hbar.last}</p>
-                        <p>{hbar.volume}</p>
-                        <p>{hbar.trust_score}</p>
-                        <p>{hbar.bid_ask_spread_percentage}</p>
-                        <p>{hbar.timestamp}</p>
-                        <p>{hbar.coin_id}</p>
-                        <p>{hbar.target_coin_id}</p>
+                        <p>HBAR Latest Price: ${hbar.last}</p>
+                        <p>HBAR Price converted to btc: ${hbar.converted_last.btc}</p>
+                        <p>HBAR Price converted to eth: ${hbar.converted_last.eth}</p>
+                        <p>HBAR Price converted to usd: ${hbar.converted_last.usd}</p>
+                        <p>HBAR Latest Price: ${hbar.last}</p>
                     </div>
                 )
             })}
