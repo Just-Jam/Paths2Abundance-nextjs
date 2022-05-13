@@ -6,24 +6,40 @@ import { mintProjectNFT } from "../../utils/hashconnectService";
 const getProject = async (projectId) => {
     let { data: project, error } = await supabase
     .from('Projects')
-    .select(`
-      id,
-      solution_id,
-      organization_id,
-      budget_usd,
-      country,
-      project_duration_days,
-      status,
-      Solutions(name),
-      Organizations(name)
+    .select(`*
     `)
     .eq('id', projectId)
 
+    console.log("Project retrieved by ID")
     console.log(project)
     return project
 }
 
-export default function Project({ project }){
+const getSolution = async (projectId) => {
+    let { data: solution, error } = await supabase
+    .from('Solutions')
+    .select(`*`)
+    .eq('id', projectId)
+
+    console.log("solution retrieved for project")
+    console.log(solution)
+    return solution
+}
+
+const getOrganization = async (projectId) => {
+    let { data: organization, error } = await supabase
+    .from('Organizations')
+    .select(`*`)
+    .eq('id', projectId)
+
+    console.log("Organization retrieved for project")
+    console.log(organization)
+    return organization
+}
+
+
+
+export default function Project({ project, solution, organization }){
     const router = useRouter();
     const { projectId } = router.query;
 
@@ -34,12 +50,12 @@ export default function Project({ project }){
     if(project[0]){
         return (
             <div>
-                <h1><b>{project[0].Solutions.name} in {project[0].country}</b></h1>
+                <h1><b>{project[0].id} in {project[0].country}</b></h1>
                 <h2>Budget USD: {project[0].budget_usd}</h2>
-                <h2>Duration: {project[0].project_duration_days} days</h2>
+                <h2>Duration: {project[0].project_duration_days}days</h2>
                 <h2>Status: {project[0].status}</h2>
-                <h2>Organization: {project[0].organization_id}</h2>
-                <h2>Solution Id: {project[0].solution_id}</h2>
+                <h2>Organization: {organization[0].name}</h2>
+                <h2>Solution: {solution[0].name}</h2>
             </div>
         )
     } else {
@@ -53,7 +69,11 @@ export async function getServerSideProps(context) {
 
     const project = await getProject(context.params.projectId)
 
+    const solution = await getSolution(context.params.projectId)
+
+    const organization = await getOrganization(context.params.projectId)
+
     return {
-        props: { project }, // will be passed to the page component as props
+        props: { project, solution, organization }, // will be passed to the page component as props
     }
 }
