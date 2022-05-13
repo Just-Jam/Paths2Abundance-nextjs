@@ -8,37 +8,49 @@ import dynamic from 'next/dynamic'
 import { useState } from 'react'
 
 
-const initialState = { solution_id: '', organization_id: '', budget_usd: '',other_info: '',country: '',project_duration_days: '',status: '',date_time_timezone: '' }
+const initialState = { solution_id: '', organization_id: '', budget_usd: '', other_info: '', country: '', project_duration_days: '', status: ''}
 export default function Projects({ Projects }) {
   useEffect(() => {
     console.log(Projects)
   }, [])
 
-    const [newProject, setProject] = useState(initialState)
+  const [newProject, setProject] = useState(initialState)
 
-    console.log("User inputed data")
+  console.log("User inputed data")
+  console.log(newProject)
+  const { solution_id, organization_id, budget_usd, other_info, country, project_duration_days, status } = newProject
+  console.log(solution_id)
+  console.log(budget_usd)
+  console.log(country)
+
+  const router = useRouter()
+  function onChange(e) {
+    setProject(() => ({ ...newProject, [e.target.name]: e.target.value }))
+  }
+
+  async function createNewProject() {
+    if (!solution_id || !organization_id || !country) return
+    console.log("Got to here")
     console.log(newProject)
-    const {solution_id, organization_id, budget_usd, other_info, country,project_duration_days,status,date_time_timezone} = newProject
 
-    const router = useRouter()
-    function onChange(e) {
-      setProject(() => ({ ...newProject, [e.target.name]: e.target.value }))
-    }
+    console.log("Got to here now")
+    console.log(newProject.solution_id)
+    console.log(newProject.country)
+    console.log("Got to here now")
 
-    async function createNewProject() {
-      if (!solution_id || !organization_id || !country) return
-      const id = uuid()
-      newProject.id = id
-      const {data} = await supabase
+    let { data, error } = await supabase
       .from('Projects')
-      .insert([
-          { solution_id, organization_id, budget_usd,other_info,country,project_duration_days,status,date_time_timezone }
-      ])
-    router.push(`/projects/${data.id}`)
+      .insert({ solution_id: newProject.solution_id, organization_id: newProject.organization_id, budget_usd: newProject.budget_usd, other_info: newProject.other_info, country: newProject.country, project_duration_days: newProject.project_duration_days, status: newProject.status })
+      .single();
 
-    }
+    console.log(data, error)
 
-  
+    router.push(`/projects`)
+
+
+  }
+
+
   return (
     <div>
 
@@ -59,31 +71,31 @@ export default function Projects({ Projects }) {
         )
       })}
 
-        <label htmlFor="solution_id ">solution_id</label>
-        <input onChange={onChange} value={newProject.solution_id} type="text" id="solution_id" name="solution_id" required />
+      <label htmlFor="solution_id ">solution_id</label>
+      <input onChange={onChange} value={newProject.solution_id} type="text" id="solution_id" name="solution_id" required />
 
-        <label htmlFor="organization_id ">organization_id</label>
-        <input onChange={onChange} value={newProject.organization_id} type="text" id="organization_id" name="organization_id" required />
+      <label htmlFor="organization_id ">organization_id</label>
+      <input onChange={onChange} value={newProject.organization_id} type="text" id="organization_id" name="organization_id" required />
 
-        <label htmlFor="budget_usd ">Last budget_usd</label>
-        <input onChange={onChange} value={newProject.budget_usd} type="text" id="budget_usd" name="budget_usd" required />
+      <label htmlFor="budget_usd ">Last budget_usd</label>
+      <input onChange={onChange} value={newProject.budget_usd} type="text" id="budget_usd" name="budget_usd" required />
 
-        <label htmlFor="other_info ">other_info</label>
-        <input onChange={onChange} value={newProject.other_info} type="text" id="other_info" name="other_info" required />
+      <label htmlFor="other_info ">other_info</label>
+      <input onChange={onChange} value={newProject.other_info} type="text" id="other_info" name="other_info" required />
 
-        <label htmlFor="country ">country</label>
-        <input onChange={onChange} value={newProject.country} type="text" id="country" name="country" required />
+      <label htmlFor="country ">country</label>
+      <input onChange={onChange} value={newProject.country} type="text" id="country" name="country" required />
 
-        <label htmlFor="project_duration_days ">Project Duration Days</label>
-        <input onChange={onChange} value={newProject.project_duration_days} type="text" id="project_duration_days" name="project_duration_days" required />
+      <label htmlFor="project_duration_days ">Project Duration Days</label>
+      <input onChange={onChange} value={newProject.project_duration_days} type="text" id="project_duration_days" name="project_duration_days" required />
 
-        <label htmlFor="status ">status</label>
-        <input onChange={onChange} value={newProject.status} type="text" id="status" name="status" required />
+      <label htmlFor="status ">status</label>
+      <input onChange={onChange} value={newProject.status} type="text" id="status" name="status" required />
 
-        <label htmlFor="date_time_timezone ">date_time_timezone</label>
-        <input onChange={onChange} value={newProject.date_time_timezone} type="text" id="date_time_timezone" name="date_time_timezone" required />
+      {/* <label htmlFor="date_time_timezone ">date_time_timezone</label>
+      <input onChange={onChange} value={newProject.date_time_timezone} type="text" id="date_time_timezone" name="date_time_timezone" required /> */}
 
-        <button type="button" onClick={createNewProject} >Submit new project</button>
+      <button type="button" onClick={createNewProject} >Submit new project</button>
 
     </div>
 
@@ -136,15 +148,3 @@ export async function getServerSideProps() {
 
 
 
-// export function postProject() {
-// const postProject = async () => {
-  //   const { data, error } = await supabase
-  //     .from('Projects')
-  //     .insert([
-  //       { some_column: 'someValue' },
-  //       { some_column: 'otherValue' },
-  //     ])
-  // }
-
-//   const postNewProject = postProject();
-// }

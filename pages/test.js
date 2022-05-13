@@ -1,8 +1,5 @@
 import Link from 'next/link';
 import { supabase } from '../utils/client';
-
-import NFTABI from '../contractsData/NFTV2.json'
-import NFTID from '../contractsData/NFTV2-id.json'
 import { getBalance, saveData } from '../utils/hashconnectService';
 
 export default function Test() {

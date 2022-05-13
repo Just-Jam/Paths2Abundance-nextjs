@@ -29,6 +29,7 @@ export async function getServerSideProps() {
       let { data: Solutions, error } = await supabase
       .from('Solutions')
       .select('*')
+      .order('id', { ascending: true})
       return Solutions
     }
   

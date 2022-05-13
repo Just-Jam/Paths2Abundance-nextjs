@@ -1,4 +1,13 @@
 import { HashConnect } from 'hashconnect'
+import { 
+    AccountId, 
+    ContractExecuteTransaction,
+    ContractFunctionParameters,
+    Hbar
+} from '@hashgraph/sdk'
+
+import NFTABI from '../contractsData/NFTV3.json'
+import NFTID from '../contractsData/NFT-id.json'
 
 let hashconnect = new HashConnect();
 
@@ -42,21 +51,31 @@ const initHashconnect = async () => {
 
 const setUpEvents = async () => {
     hashconnect.pairingEvent.once((pairingData) => {
-    //example
-    pairingData.accountIds.forEach(id => {
-        if(saveData.pairedAccounts.indexOf(id) == -1)
-            saveData.pairedAccounts.push(id);
+        pairingData.accountIds.forEach(id => {
+            if(saveData.pairedAccounts.indexOf(id) == -1){
+                saveData.pairedAccounts.push(id);
+            }
+        })
+        saveData.pairedWalletData = pairingData;
+        saveDataInLocalStorage();
+        console.log(pairingData)
+        console.log(saveData.pairedAccounts)
     })
-    saveData.pairedWalletData = pairingData;
-    saveDataInLocalStorage();
-    console.log(pairingData)
-    console.log(saveData.pairedAccounts)
+
+    hashconnect.transactionEvent.once((transactionData) => {
+        console.log("Transaction success: ", transactionData)
     })
 }
 
 const saveDataInLocalStorage = () => {
     let data = JSON.stringify(saveData);
     localStorage.setItem("hashconnectData", data)
+}
+
+const clearPairings = () => {
+    saveData.pairedAccounts = [];
+    saveData.pairedWalletData = undefined;
+    localStorage.removeItem("hashconnectData");
 }
 
 const loadLocalData = () => {
@@ -143,4 +162,11 @@ const mintProjectNFT = async(projectId, mintPriceHBAR, mintAmount) => {
 
 
 
-export { saveData, appMetadata, initHashconnect, getBalance, mintProjectNFT }
+export { 
+    saveData, 
+    appMetadata, 
+    initHashconnect, 
+    getBalance, 
+    mintProjectNFT,
+    clearPairings,
+}
