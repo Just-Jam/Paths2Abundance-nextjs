@@ -146,13 +146,9 @@ const getPATHBalance = async() => {
     let address = AccountId.fromString(saveData.pairedAccounts[0]).toSolidityAddress()
     const getBalanceTx = await new ContractCallQuery()
         .setContractId(`0.0.${PathTokenID.contractID.num.low}`)
-        .setGas(1000000)
-        .setFunction(
-            "balanceOf",
-            new ContractFunctionParameters()
-            .addAddress(address)
-        )
-        .setQueryPayment(new Hbar(10))
+        .setGas(5000000)
+        .setFunction("decimals")
+        .setQueryPayment(new Hbar(20))
         
     let res = await getBalanceTx.executeWithSigner(signer)
     console.log("Raw result: ", res)

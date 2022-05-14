@@ -12,20 +12,6 @@ export default function Projects({ Projects }) {
   return (
     <div>
       <ProjectsComponent Projects={Projects}/>
-      {Projects.map(project => {
-        return (
-          <div key={project.id}>
-            <h1><b>{project.Solutions.name} in {project.country}</b></h1>
-            <h2>Budget USD: {project.budget_usd}</h2>
-            <h2>Duration: {project.project_duration_days} days</h2>
-            <h2>Status: {project.status}</h2>
-            <h2>Organization: {project.Organizations.name}</h2>
-            <h2>Project Id: {project.id}</h2>
-            <button type="button" onClick={() => router.push(`/projects/${project.id}`)}>Donate now</button>
-            <br></br>
-          </div>
-        )
-      })}
     </div>
   )
 }

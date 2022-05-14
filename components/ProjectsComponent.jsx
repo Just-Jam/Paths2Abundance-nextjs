@@ -29,6 +29,7 @@ function ProjectsComponent({ Projects }) {
                                         <div className="px-6 pt-1 pb-2">
                                             <span className="inline-block bg-slate-100 rounded px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">{project.country}</span>
                                         </div>
+                                        <h5 class="text-gray-900 text-xl font-medium mb-2">Amount to Raise: ${project.budget_usd}</h5>
                                         <button type="button" onClick={() => router.push(`/projects/${project.id}`)} className=" inline-block px-20 py-4 bg-transparent text-blue-700 font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-100 hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">Find Out More</button>
                                     </div>
                                     </div>

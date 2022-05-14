@@ -5,7 +5,7 @@ import { useEffect, useState, useCallback } from 'react';
 //components
 import Hero from '../components/Hero';
 
-export default function Home({ Organizations, Solutions, Projects, saveData }) {
+export default function Home({ Organizations, Solutions, Projects }) {
 
   const [addOrg, setAddOrg] = useState({
     name: '',
@@ -35,7 +35,7 @@ export default function Home({ Organizations, Solutions, Projects, saveData }) {
   }
 
   useEffect(() => {
-    console.log(saveData)
+
   },[])
 
   return (
@@ -50,6 +50,7 @@ export async function getServerSideProps() {
     let { data: Organizations, error } = await supabase
     .from('Organizations')
     .select('*')
+    .order('id', { ascending: true})
     return Organizations
   }
 
@@ -57,6 +58,7 @@ export async function getServerSideProps() {
     let { data: Solutions, error } = await supabase
     .from('Solutions')
     .select('*')
+    .order('id', { ascending: true})
     return Solutions
   }
 
