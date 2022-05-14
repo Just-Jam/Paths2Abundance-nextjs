@@ -1,5 +1,7 @@
 import React, {useState} from 'react';
 import { Link } from 'react-scroll'
+import Image from 'next/image'
+import logo from '../public/p2a-logo.png'
 
 import { MenuIcon, XIcon } from '@heroicons/react/outline';
 
@@ -13,7 +15,12 @@ const Navbar = ({ initHashconnect }) => {
     <div className='navbar navbar-expand-lg shadow-md py-2 bg-white relative flex items-center w-full justify-between'>
       <div className='px-2 flex justify-between items-center w-full h-full'>
         <div className='flex items-center'>
-          <h1 className='text-3xl font-bold mr-4 sm:text-4xl'>P2A</h1>
+          <div className='w-20'>
+          <Image src={logo} />
+
+          </div>
+          
+          {/* <h1 className='text-3xl font-bold mr-4 sm:text-4xl'>P2A</h1> */}
           <ul className='hidden md:flex'>
           <li><Link to="home" smooth={true} duration={500}>Home</Link></li>
           <li><Link to="solutions" smooth={true} offset={-200} duration={500}>Solutions</Link></li>
