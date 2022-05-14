@@ -46,9 +46,9 @@ const initHashconnect = async () => {
     } else {
         await hashconnect.init(appMetadata, saveData.privateKey);
         await hashconnect.connect(saveData.topic, saveData.pairedWalletData);
+        await hashconnect.pair(saveData.pairedWalletData, saveData.pairedAccounts, 'testnet')
     }
     setUpEvents();
-    console.log("Paring String: ", saveData.pairingString)
 }
 
 const setUpEvents = async () => {

@@ -43,6 +43,8 @@ export async function getServerSideProps() {
       country,
       project_duration_days,
       status,
+      mintPriceHBAR,
+      maxNFTSupply,
       Solutions(name, image_file_name),
       Organizations(name)
     `)
