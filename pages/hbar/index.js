@@ -6,12 +6,12 @@ import Link from 'next/link'
 export default function HbarDisplay({ hbarData }) {
 
     useEffect(() => {
-        console.log("This is the hedera data")
-        console.log(hbarData)
-        console.log("Inside of the hedera data")
-        console.log(hbarData.tickers)
-        console.log("Individual data")
-        console.log(hbarData.tickers[0])
+        // console.log("This is the hedera data")
+        // console.log(hbarData)
+        // console.log("Inside of the hedera data")
+        // console.log(hbarData.tickers)
+        // console.log("Individual data")
+        // console.log(hbarData.tickers[0])
     }, [])
 
     return (

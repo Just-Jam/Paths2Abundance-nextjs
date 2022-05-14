@@ -1,4 +1,5 @@
 import React from 'react'
+import { useState } from 'react'
 
 function ProjectsSingle({ project, solution, organization }) {
   return (
@@ -7,7 +8,7 @@ function ProjectsSingle({ project, solution, organization }) {
   <div className="container px-4 mx-auto">
     <div className="flex flex-wrap -mx-4">
       <div className="w-full lg:w-1/2 px-4 mb-5 lg:mb-0">
-      <img className="rounded-t-lg" src="https://images.unsplash.com/photo-1509099381441-ea3c0cf98b94?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=572&q=80" alt=""/>
+      <img className="rounded-t-lg" src={solution[0].image_file_name} alt=""/>
       <h5 className="text-gray-900 text-xl py-5 font-medium mb-2">{solution[0].name} in {project[0].country}</h5>
       <h5 className="text-gray-900 text-xl font-medium mb-2">Budget: ${project[0].budget_usd}</h5>
       <h5 className="text-gray-900 text-xl font-medium mb-2">Country: {project[0].country}</h5>
@@ -18,7 +19,9 @@ function ProjectsSingle({ project, solution, organization }) {
       <p className="text-gray-700 text-base mb-2"> Description of the project and what project is about </p>
       
         <div className="mb-5">
-            <input type="text" id="amount" name="amount" placeholder="Enter an amount." className="border border-gray-300 shadow p-3 w-full rounded"/>
+          <h5 className="text-gray-900 text-xl font-medium mb-2">NFT Mint Price: </h5>
+          Max NFT supply, number of minted NFTs, remaining nfts
+            <input type="text" id="amount" name="amount" placeholder="NFTs to mint" className="border border-gray-300 shadow p-3 w-full rounded"/>
         </div>
         <button className="block w-full bg-blue-500 text-white font-bold p-4 rounded-lg">Donate</button>
     </div>

@@ -2,7 +2,7 @@ import { supabase } from "../../utils/client";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import ProjectsSingle from "../../components/ProjectsSingle";
-import { saveData, mintProjectNFT } from "../../utils/hashconnectService";
+import { mintProjectNFT } from "../../utils/hashconnectService";
 
 const fetchProject = async (projectId) => {
     let { data: project, error } = await supabase
@@ -35,6 +35,7 @@ const fetchOrg = async (organizationId) => {
 export default function Project({ project, solution, organization }){
     const router = useRouter();
     const [saveData, setSaveData] = useState(null);
+    const [mintAmount, setMintAmount] = useState(0);
 
     useEffect(() => {
         let foundData = localStorage.getItem("hashconnectData")
