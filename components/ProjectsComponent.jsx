@@ -18,18 +18,18 @@ function ProjectsComponent({ Projects }) {
                             <div key={project.id} className="w-full border border-gray-200 rounded-lg shadow-sm">
                                 <div className="flex justify-center">
                                     <div className="rounded-lg shadow-lg bg-white max-w-sm">
-                                    {/* <a href="#!">
-                                        <img className="rounded-t-lg" src={solution.image_file_name} alt="" />
-                                    </a> */}
+                                    <a href="#!">
+                                    <img class="rounded-t-lg" src="https://images.unsplash.com/photo-1509099381441-ea3c0cf98b94?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=872&q=80" alt=""/>
+                                    </a>
                                     <div className="p-6">
-                                        <h5 className="text-gray-900 text-xl font-medium mb-2">{project.solution_id}</h5>
+                                        <h5 className="text-gray-900 text-xl font-medium mb-2">{project.Solutions.name} in {project.country}</h5>
                                         <p className="text-gray-700 text-base mb-2">
-                                            {project.organization_id}
+                                            Organized by {project.Organizations.name}
                                         </p>
                                         <div className="px-6 pt-1 pb-2">
                                             <span className="inline-block bg-slate-100 rounded px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">{project.country}</span>
                                         </div>
-                                        <button type="button" onClick={() => router.push(`/organizations/${project.id}`)} className=" inline-block px-20 py-4 bg-transparent text-blue-700 font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-100 hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">Find Out More</button>
+                                        <button type="button" onClick={() => router.push(`/projects/${project.id}`)} className=" inline-block px-20 py-4 bg-transparent text-blue-700 font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-100 hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">Find Out More</button>
                                     </div>
                                     </div>
                                 </div>

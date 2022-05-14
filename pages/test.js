@@ -1,8 +1,14 @@
 import Link from 'next/link';
 import { supabase } from '../utils/client';
-import { getBalance, saveData } from '../utils/hashconnectService';
+import { Hbar } from '@hashgraph/sdk';
 
 export default function Test() {
+
+
+    const HbarToTinybar = (amount) =>{
+        const tinyBars = new Hbar(amount).toTinybars();
+        return tinyBars.toNumber()
+    }
     
     return (
         <div>
@@ -12,8 +18,7 @@ export default function Test() {
                 </Link>
             </li>
             <h1>Test Page</h1>
-            <button onClick={() => console.log(saveData)}>Get saveData</button>
-            <button onClick={getBalance}>Get balance</button>
+            <h2>tinyBars per HBAR = {HbarToTinybar(1)}</h2>
         </div>
     )
 }

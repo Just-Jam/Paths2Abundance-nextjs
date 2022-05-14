@@ -3,11 +3,11 @@ import { Link } from 'react-scroll'
 
 import { MenuIcon, XIcon } from '@heroicons/react/outline';
 
-const Navbar = ({ initHashconnect, saveData }) => {
-    const [nav, setNav] = useState(false)
-    const handleClick = () => setNav(!nav)
+const Navbar = ({ initHashconnect }) => {
+  const [nav, setNav] = useState(false)
+  const handleClick = () => setNav(!nav)
 
-    const handleClose =()=> setNav(!nav)
+  const handleClose =()=> setNav(!nav)
 
   return (
     <div className='navbar navbar-expand-lg shadow-md py-2 bg-white relative flex items-center w-full justify-between'>

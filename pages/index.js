@@ -5,7 +5,7 @@ import { useEffect, useState, useCallback } from 'react';
 //components
 import Hero from '../components/Hero';
 
-export default function Home({ Organizations, Solutions, Projects }) {
+export default function Home({ Organizations, Solutions, Projects, saveData }) {
 
   const [addOrg, setAddOrg] = useState({
     name: '',
@@ -35,9 +35,7 @@ export default function Home({ Organizations, Solutions, Projects }) {
   }
 
   useEffect(() => {
-    console.log(Organizations)
-    console.log(Solutions)
-    console.log(Projects)
+    console.log(saveData)
   },[])
 
   return (

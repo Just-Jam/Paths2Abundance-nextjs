@@ -12,7 +12,7 @@ function SolutionsComponent({ Solutions }) {
                             <p className="text-xl text-gray-500">Explore and donate to your prefered Solutions.</p>
                         </div>
                     </div>
-                    <div class="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3">
+                    <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3">
                     {Solutions.map(solution => {
                         return (
                             <div key={solution.id} className="w-full border border-gray-200 rounded-lg shadow-sm">

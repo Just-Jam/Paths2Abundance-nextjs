@@ -1,13 +1,14 @@
 import { HashConnect } from 'hashconnect'
 import { 
     AccountId, 
+    ContractCallQuery, 
     ContractExecuteTransaction,
     ContractFunctionParameters,
-    Hbar
+    Hbar,
 } from '@hashgraph/sdk'
 
-import NFTABI from '../contractsData/NFTV3.json'
 import NFTID from '../contractsData/NFT-id.json'
+import PathTokenID from '../contractsData/PathToken-id.json'
 
 let hashconnect = new HashConnect();
 
@@ -16,7 +17,8 @@ let saveData = {
     pairingString: "",
     privateKey: "",
     pairedWalletData: null,
-    pairedAccounts: []
+    pairedAccounts: [],
+    pathTokenBalance: 0,
 }
 
 const appMetadata = {
@@ -58,8 +60,6 @@ const setUpEvents = async () => {
         })
         saveData.pairedWalletData = pairingData;
         saveDataInLocalStorage();
-        console.log(pairingData)
-        console.log(saveData.pairedAccounts)
     })
 
     hashconnect.transactionEvent.once((transactionData) => {
@@ -81,9 +81,9 @@ const clearPairings = () => {
 const loadLocalData = () => {
     let foundData = localStorage.getItem("hashconnectData")
     if(foundData){
-    saveData = JSON.parse(foundData);
-    console.log("Found local data", saveData)
-    return true;
+        saveData = JSON.parse(foundData);
+        console.log("Found local data", saveData)
+        return true;
     }
     else return false;
 }
@@ -120,26 +120,6 @@ const createProjectNFT = async() => {
     console.log(res)
 }
 
-const mintProjectNFT2 = async(mintAmount) => {
-    console.log("Minting Project NFT")
-    let provider = hashconnect.getProvider("testnet", saveData.topic, saveData.pairedAccounts[0])
-    let signer = hashconnect.getSigner(provider)
-    const mintNFTTx = await new ContractExecuteTransaction()
-        .setContractId(`0.0.${NFTID.contractID.num.low}`)
-        .setGas(1000000) //0.45 Hbar
-        .setFunction(
-            "mint",
-            new ContractFunctionParameters()
-            .addUint256(1)
-            .addUint256(mintAmount)
-        )
-        .setPayableAmount(new Hbar(mintAmount))
-        .freezeWithSigner(signer)
-    
-    let res = mintNFTTx = await mintNFTTx.executeWithSigner(signer)
-    console.log(res)
-}
-
 const mintProjectNFT = async(projectId, mintPriceHBAR, mintAmount) => {
     console.log("Minting Project NFT")
     let provider = hashconnect.getProvider("testnet", saveData.topic, saveData.pairedAccounts[0])
@@ -156,17 +136,31 @@ const mintProjectNFT = async(projectId, mintPriceHBAR, mintAmount) => {
         .setPayableAmount(new Hbar(mintAmount * mintPriceHBAR))
         .freezeWithSigner(signer)
     
-    let res = mintNFTTx = await mintNFTTx.executeWithSigner(signer)
+    let res = await mintNFTTx.executeWithSigner(signer)
     console.log(res)
 }
 
+const getPATHBalance = async() => {
+    let provider = hashconnect.getProvider("testnet", saveData.topic, saveData.pairedAccounts[0])
+    let signer = hashconnect.getSigner(provider)
+    let address = AccountId.fromString(saveData.pairedAccounts[0]).toSolidityAddress()
+    const getBalanceTx = await new ContractCallQuery()
+        .setContractId(`0.0.${PathTokenID.contractID.num.low}`)
+        .setGas(1000000)
+        .setFunction(
+            "balanceOf",
+            new ContractFunctionParameters()
+            .addAddress(address)
+        )
+        .setQueryPayment(new Hbar(10))
+        
+    let res = await getBalanceTx.executeWithSigner(signer)
+    console.log("Raw result: ", res)
+}
 
-
-export { 
-    saveData, 
-    appMetadata, 
+export {  
     initHashconnect, 
-    getBalance, 
     mintProjectNFT,
     clearPairings,
+    getPATHBalance
 }

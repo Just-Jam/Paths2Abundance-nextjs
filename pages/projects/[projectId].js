@@ -1,6 +1,7 @@
 import { supabase } from "../../utils/client";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import ProjectsSingle from "../../components/ProjectsSingle";
 import { saveData, mintProjectNFT } from "../../utils/hashconnectService";
 
 const fetchProject = async (projectId) => {
@@ -31,26 +32,29 @@ const fetchOrg = async (organizationId) => {
     return organization
 }
 
-
-
 export default function Project({ project, solution, organization }){
     const router = useRouter();
-    const { projectId } = router.query;
+    const [saveData, setSaveData] = useState(null);
 
     useEffect(() => {
-        console.log(saveData)
+        let foundData = localStorage.getItem("hashconnectData")
+        if(foundData){
+            setSaveData(JSON.parse(foundData));
+        }
     },[])
     
     if(project[0]){
         return (
             <div>
-                <h1><b>{solution[0].name} in {project[0].country}</b></h1>
-                <h2>Budget USD: {project[0].budget_usd}</h2>
-                <h2>Duration: {project[0].project_duration_days}days</h2>
-                <h2>Status: {project[0].status}</h2>
-                <h2>Organization: {organization[0].name}</h2>
-                <h2>Organization Wallet: {organization[0].wallet_address}</h2>
-                <h2>Solution: {solution[0].name}</h2>
+                <ProjectsSingle solution={solution} project={project} organization={organization}/>
+                {/* {saveData.pairedAccounts[0] == organization[0].wallet_address ? (
+                    <div>
+                        Your Organization
+                    </div>
+                ) : (
+                    <div>
+                    </div>
+                )} */}
             </div>
         )
     } else {

@@ -1,6 +1,6 @@
 import React from 'react'
 
-function ProjectsSingle() {
+function ProjectsSingle({ project, solution, organization }) {
   return (
     <div>
     <section class="py-20 xl:pt-24 xl:pb-28 bg-white">
@@ -8,11 +8,12 @@ function ProjectsSingle() {
     <div class="flex flex-wrap -mx-4">
       <div class="w-full lg:w-1/2 px-4 mb-5 lg:mb-0">
       <img class="rounded-t-lg" src="https://images.unsplash.com/photo-1509099381441-ea3c0cf98b94?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=572&q=80" alt=""/>
-      <h5 class="text-gray-900 text-xl py-5 font-medium mb-2">Project Name</h5>
-      <h5 class="text-gray-900 text-xl font-medium mb-2">Budget:</h5>
-      <h5 class="text-gray-900 text-xl font-medium mb-2">Country:</h5>
-      <h5 class="text-gray-900 text-xl font-medium mb-2">Duration:</h5>
-      <h5 class="text-gray-900 text-xl font-medium mb-2">Budget:</h5>
+      <h5 class="text-gray-900 text-xl py-5 font-medium mb-2">{solution[0].name} in {project[0].country}</h5>
+      <h5 class="text-gray-900 text-xl font-medium mb-2">Budget: ${project[0].budget_usd}</h5>
+      <h5 class="text-gray-900 text-xl font-medium mb-2">Country: {project[0].country}</h5>
+      <h5 class="text-gray-900 text-xl font-medium mb-2">Duration: {project[0].project_duration_days}</h5>
+      <h5 class="text-gray-900 text-xl font-medium mb-2">Status: {project[0].status}</h5>
+      <h5 class="text-gray-900 text-xl font-medium mb-2">Organization Wallet ID: {organization[0].wallet_address}</h5>
       <h5 class="text-gray-900 text-xl font-medium mb-2">Amount Donated:</h5>
       <p class="text-gray-700 text-base mb-2"> Description of the project and what project is about </p>
       
