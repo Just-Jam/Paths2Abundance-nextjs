@@ -19,11 +19,11 @@ const Navbar = ({ initHashconnect }) => {
           <div className='flex items-center'>
             <h1 className='text-3xl font-bold mr-4 sm:text-4xl'>P2A</h1>
             <ul className='hidden md:flex'>
-              <Link href="/" activeClass="active" spy={true} smooth={true} duration={500}><a>Home</a></Link>
-              <Link href="/solutions" activeClass="active" spy={true} smooth={true} offset={-200} duration={500}><a>Solutions</a></Link>
-              <Link href="/projects" activeClass="active" spy={true} smooth={true} offset={-50} duration={500}><a>Projects</a></Link>
-              <Link href="about" activeClass="active" spy={true} smooth={true} offset={-100} duration={500}><a>About us</a></Link>
-              <Link href="/hbar" activeClass="active" spy={true} smooth={true} offset={-100} duration={500}><a>Hbar</a></Link>
+              <li><Link href="/" activeClass="active" spy={true} smooth={true} duration={500}><a>Home</a></Link></li>
+              <li><Link href="/solutions" activeClass="active" spy={true} smooth={true} offset={-200} duration={500}><a>Solutions</a></Link></li>
+              <li><Link href="/projects" activeClass="active" spy={true} smooth={true} offset={-50} duration={500}><a>Projects</a></Link></li>
+              <li><Link href="about" activeClass="active" spy={true} smooth={true} offset={-100} duration={500}><a>About us</a></Link></li>
+              <li><Link href="/hbar" activeClass="active" spy={true} smooth={true} offset={-100} duration={500}><a>Hbar</a></Link></li>
             </ul>
           </div>
         </nav>
