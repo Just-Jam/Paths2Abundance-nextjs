@@ -18,7 +18,7 @@ const Navbar = ({ initHashconnect }) => {
           <li><Link to="home" smooth={true} duration={500}>Home</Link></li>
           <li><Link to="solutions" smooth={true} offset={-200} duration={500}>Solutions</Link></li>
           <li><Link to="projects" smooth={true} offset={-50} duration={500}>Projects</Link></li>
-          <li><Link to="about" smooth={true} offset={-100} duration={500}>About us</Link></li>
+          <li><Link to="about" smooth={true} offset={-100} duration={500}>About Us</Link></li>
           </ul>
         </div>
         <div className='hidden md:flex pr-4'>
