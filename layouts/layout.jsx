@@ -1,5 +1,4 @@
-
-import Navbar from './Navbar';
+import Navbar from '../components/Navbar'
 import { initHashconnect } from '../utils/hashconnectService';
 
 import React, { useState } from 'react';

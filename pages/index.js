@@ -35,7 +35,7 @@ export default function Home({ Organizations, Solutions, Projects }) {
   }
 
   useEffect(() => {
-
+    
   },[])
 
   return (
