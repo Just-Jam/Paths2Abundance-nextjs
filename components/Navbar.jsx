@@ -17,14 +17,12 @@ const Navbar = ({ initHashconnect }) => {
       <div className='px-2 flex justify-between items-center w-full h-full'>
         <div className='flex items-center'>
           <h1 className='text-3xl font-bold mr-4 sm:text-4xl'>P2A</h1>
-          <nav>
             <ul className='hidden md:flex'>
               <li><Link to="/home" activeClass="active" spy={true} smooth={true} duration={500}>Home</Link></li>
               <li><Link to="/solutions" activeClass="active" spy={true} smooth={true} offset={-200} duration={500}>Solutions</Link></li>
               <li><Link to="/projects" activeClass="active" spy={true} smooth={true} offset={-50} duration={500}>Projects</Link></li>
               <li><Link to="about" activeClass="active" spy={true} smooth={true} offset={-100} duration={500}>About us</Link></li>
             </ul>
-          </nav>
         </div>
         <div className='hidden md:flex pr-4'>
           <button className='px-8 py-3' onClick={initHashconnect}>Connect Wallet</button>

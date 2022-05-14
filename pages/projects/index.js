@@ -43,7 +43,7 @@ export async function getServerSideProps() {
       country,
       project_duration_days,
       status,
-      Solutions(name),
+      Solutions(name, image_file_name),
       Organizations(name)
     `)
       .order('id', { ascending: true })
