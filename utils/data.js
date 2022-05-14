@@ -17,3 +17,5 @@ export const navLinks = [
       path: "/organizations",
     },
   ];
+
+  
