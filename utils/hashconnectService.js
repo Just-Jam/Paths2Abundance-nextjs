@@ -5,12 +5,18 @@ import {
     ContractExecuteTransaction,
     ContractFunctionParameters,
     Hbar,
+    Client
 } from '@hashgraph/sdk'
+import { Interface } from "@ethersproject/abi";
 
 import NFTID from '../contractsData/NFT-id.json'
+import NFTAbi from '../contractsData/NFTV3.json'
 import PathTokenID from '../contractsData/PathToken-id.json'
 
 let hashconnect = new HashConnect();
+
+let nftAbi = NFTAbi.abi
+let abiInterface = new Interface(nftAbi);
 
 let saveData = {
     topic: "",
@@ -95,13 +101,12 @@ const getBalance = async () => {
     console.log(balance)
 }
 
-//Works
-const createProjectNFT = async() => {
+//dunno if Works
+const createProjectNFT = async(mintPriceHBAR, maxSupply, orgWallet, name) => {
     console.log("Creating Project NFT")
     let provider = hashconnect.getProvider("testnet", saveData.topic, saveData.pairedAccounts[0])
     let signer = hashconnect.getSigner(provider)
-    const account1ID = accountIDs.account1.accountId;
-    const address = AccountId.fromString(account1ID).toSolidityAddress()
+    const address = AccountId.fromString(orgWallet).toSolidityAddress()
     console.log(address)
     const createProjectTx = await new ContractExecuteTransaction()
         .setContractId(`0.0.${NFTID.contractID.num.low}`)
@@ -109,14 +114,39 @@ const createProjectNFT = async() => {
         .setFunction(
             "createProject", 
             new ContractFunctionParameters()
-                .addUint256(10000)
-                .addUint256(1000)
-                .addString("Project 1")
+                .addUint256(new Hbar(mintPriceHBAR).toTinybars())
+                .addUint256(maxSupply)
+                .addString(name)
                 .addAddress(address)
         )
         .freezeWithSigner(signer)
     
     let res = await createProjectTx.executeWithSigner(signer)
+    console.log(res)
+}
+
+const getProjectInfo = async(projectId) => {
+    const accountId = process.env.NEXT_PUBLIC_ACCOUNTID
+    const privateKey = process.env.NEXT_PUBLIC_PVKEY
+
+    if (accountId == null ||
+        privateKey == null ) {
+        throw new Error("Environment variables myAccountId and myPrivateKey must be present");
+    }
+    const client = Client.forTestnet();
+    client.setOperator(accountId, privateKey);
+    const getProjectInfoTx = await new ContractCallQuery()
+        .setContractId(`0.0.${NFTID.contractID.num.low}`)
+        .setGas(1000000) //0.45 Hbar
+        .setFunction(
+            "getProject",
+            new ContractFunctionParameters()
+            .addUint256(projectId)
+        )
+        .setQueryPayment(new Hbar(1))
+        .execute(client)
+
+    let res = abiInterface.decodeFunctionResult("getProject", getProjectInfoTx.bytes)
     console.log(res)
 }
 
@@ -135,28 +165,65 @@ const mintProjectNFT = async(projectId, mintPriceHBAR, mintAmount) => {
         )
         .setPayableAmount(new Hbar(mintAmount * mintPriceHBAR))
         .freezeWithSigner(signer)
+        console.log(new Hbar(mintAmount * mintPriceHBAR))
     
     let res = await mintNFTTx.executeWithSigner(signer)
     console.log(res)
 }
 
 const getPATHBalance = async() => {
-    let provider = hashconnect.getProvider("testnet", saveData.topic, saveData.pairedAccounts[0])
-    let signer = hashconnect.getSigner(provider)
+    const accountId = process.env.NEXT_PUBLIC_ACCOUNTID
+    const privateKey = process.env.NEXT_PUBLIC_PVKEY
+
+    if (accountId == null ||
+        privateKey == null ) {
+        throw new Error("Environment variables myAccountId and myPrivateKey must be present");
+    }
+    const client = Client.forTestnet();
+    client.setOperator(accountId, privateKey);
+
     let address = AccountId.fromString(saveData.pairedAccounts[0]).toSolidityAddress()
     const getBalanceTx = await new ContractCallQuery()
         .setContractId(`0.0.${PathTokenID.contractID.num.low}`)
         .setGas(5000000)
-        .setFunction("decimals")
-        .setQueryPayment(new Hbar(20))
+        .setFunction(
+            "balanceOf",
+            new ContractFunctionParameters()
+                .addAddress(address)
+        )
+        .setQueryPayment(new Hbar(1))
         
-    let res = await getBalanceTx.executeWithSigner(signer)
-    console.log("Raw result: ", res)
+    let res = await getBalanceTx.execute(client)
+    let value = res.getUint256().toNumber() * 1e-8
+    console.log(value)
+    return value
 }
+
+const claimHBAR = async(projectId) => {
+    let provider = hashconnect.getProvider("testnet", saveData.topic, saveData.pairedAccounts[0])
+    let signer = hashconnect.getSigner(provider)
+    const claimHBARTx = await new ContractExecuteTransaction()
+        .setContractId(`0.0.${NFTID.contractID.num.low}`)
+        .setGas(1000000) //0.45 Hbar
+        .setFunction(
+            "withdrawEth",
+            new ContractFunctionParameters()
+            .addUint256(projectId)
+        )
+        .freezeWithSigner(signer)
+    
+    let res = await claimHBARTx.executeWithSigner(signer)
+    console.log(res)
+}
+
 
 export {  
     initHashconnect, 
     mintProjectNFT,
     clearPairings,
-    getPATHBalance
+    getPATHBalance,
+    createProjectNFT,
+    getProjectInfo,
+    claimHBAR,
+    loadLocalData,
 }

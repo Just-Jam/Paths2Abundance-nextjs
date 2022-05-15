@@ -12,14 +12,15 @@ function ProjectsSingle({ project, solution, organization }) {
       <h5 className="text-gray-900 text-xl py-5 font-medium mb-2">{solution[0].name} in {project[0].country}</h5>
       <h5 className="text-gray-900 text-xl font-medium mb-2">Budget: ${project[0].budget_usd}</h5>
       <h5 className="text-gray-900 text-xl font-medium mb-2">Country: {project[0].country}</h5>
-      <h5 className="text-gray-900 text-xl font-medium mb-2">Duration: {project[0].project_duration_days}</h5>
+      <h5 className="text-gray-900 text-xl font-medium mb-2">Duration: {project[0].project_duration_days} Days</h5>
       <h5 className="text-gray-900 text-xl font-medium mb-2">Status: {project[0].status}</h5>
       <h5 className="text-gray-900 text-xl font-medium mb-2">Organization Wallet ID: {organization[0].wallet_address}</h5>
       <h5 className="text-gray-900 text-xl font-medium mb-2">Amount Donated:</h5>
       <p className="text-gray-700 text-base mb-2"> Description of the project and what project is about </p>
       
         <div className="mb-5">
-          <h5 className="text-gray-900 text-xl font-medium mb-2">NFT Mint Price: </h5>
+          <h5 className="text-gray-900 text-xl font-medium mb-2">NFT Mint Price: {project[0].mintPriceHBAR}</h5>
+          <h5 className="text-gray-900 text-xl font-medium mb-2">NFT Max Supply: {project[0].maxNFTSupply}</h5>
           Max NFT supply, number of minted NFTs, remaining nfts
             <input type="text" id="amount" name="amount" placeholder="NFTs to mint" className="border border-gray-300 shadow p-3 w-full rounded"/>
         </div>

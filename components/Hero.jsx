@@ -1,6 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
 import bgImg from '../public/herombg.gif'
+import router from 'next/router'
 
 const Hero = () => {
   return (
@@ -11,7 +12,7 @@ const Hero = () => {
                 <h1 className='py-3 text-5xl md:text-7xl font-bold'>Paths2 <br/>Abundance</h1>
                 <p className='text-2xl'>Help communities help themselves</p>
                 <p className='text-2xl'>through <b>frugal innovations</b></p>
-                <button className='py-3 px-6 sm:w-[60%] my-4'>Make a Donation</button>
+                <button onClick={() => router.push(`/projects`)} className='py-3 px-6 sm:w-[60%] my-4'>Make a Donation</button>
             </div>
             <div>
               <Image className='w-full' src={bgImg} />
