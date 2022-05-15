@@ -7,7 +7,7 @@ function SolutionsComponent({ Solutions }) {
             <section className="w-full py-12 bg-white lg:py-24">
                 <div className="max-w-6xl px-12 mx-auto text-center">
                     <div className="space-y-12 md:text-center">
-                        <div className="max-w-3xl mb-20 space-y-5 sm:mx-auto sm:space-y-4">
+                        <div className="max-w-3xl mb-10 space-y-5 sm:mx-auto sm:space-y-4">
                             <h2 className="relative text-4xl font-extrabold tracking-tight sm:text-5xl">Latest Solutions</h2>
                             <p className="text-xl text-gray-500">Explore and donate to your prefered Solutions.</p>
                         </div>

@@ -1,6 +1,6 @@
 import React from 'react'
 import Image from 'next/image'
-import bgImg from '../public/herombg.gif'
+import bgImg from '../public/hero-img.gif'
 import router from 'next/router'
 
 const Hero = () => {

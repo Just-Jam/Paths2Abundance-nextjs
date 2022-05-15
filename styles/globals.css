@@ -8,7 +8,7 @@
     }
   
     button{
-      @apply text-white border bg-indigo-600 border-blue-600
+      @apply text-white border bg-btncolor border-blue-600
       hover:bg-transparent hover:text-indigo-600 rounded-md
     }
 }
