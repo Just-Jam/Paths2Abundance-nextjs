@@ -1,5 +1,8 @@
 import React from 'react'
+<<<<<<< HEAD
 
+=======
+>>>>>>> bcd77b2125be824a87ef9bfac01a667bdf60ca84
 import Image from 'next/image'
 import bgImg from '../public/herombg.gif'
 
@@ -15,7 +18,7 @@ const Hero = () => {
                 <button className='py-3 px-6 sm:w-[60%] my-4'>Make a Donation</button>
             </div>
             <div>
-                <img className='w-full' src={bgImg} />
+              <Image className='w-full' src={bgImg} />
             </div>
         </div>
     </div>

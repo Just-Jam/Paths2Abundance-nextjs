@@ -1,6 +1,14 @@
+<<<<<<< HEAD
 import React, { useState } from 'react';
 import Link from 'next/link'
 import Image from 'next/image'
+=======
+import React, {useState} from 'react';
+import { Link } from 'react-scroll'
+import Image from 'next/image'
+import logo from '../public/p2a-logo.png'
+
+>>>>>>> bcd77b2125be824a87ef9bfac01a667bdf60ca84
 import { MenuIcon, XIcon } from '@heroicons/react/outline';
 import { navLinks } from '../utils/data';
 import logo from '../public/p2a-logo.png'
@@ -16,21 +24,20 @@ const Navbar = ({ initHashconnect }) => {
   return (
     <div className='navbar navbar-expand-lg shadow-md py-2 bg-white relative flex items-center w-full justify-between'>
       <div className='px-2 flex justify-between items-center w-full h-full'>
-        <nav>
-          <div className='flex items-center'>
+        <div className='flex items-center'>
           <div className='w-20'>
           <Image src={logo} />
 
           </div>
-            <ul className='hidden md:flex'>
-              <li><Link href="/" activeClass="active" spy={true} smooth={true} duration={500}><a>Home</a></Link></li>
-              <li><Link href="/solutions" activeClass="active" spy={true} smooth={true} offset={-200} duration={500}><a>Solutions</a></Link></li>
-              <li><Link href="/projects" activeClass="active" spy={true} smooth={true} offset={-50} duration={500}><a>Projects</a></Link></li>
-              <li><Link href="about" activeClass="active" spy={true} smooth={true} offset={-100} duration={500}><a>About us</a></Link></li>
-              <li><Link href="/hbar" activeClass="active" spy={true} smooth={true} offset={-100} duration={500}><a>Hbar</a></Link></li>
-            </ul>
-          </div>
-        </nav>
+          
+          {/* <h1 className='text-3xl font-bold mr-4 sm:text-4xl'>P2A</h1> */}
+          <ul className='hidden md:flex'>
+          <li><Link to="home" smooth={true} duration={500}>Home</Link></li>
+          <li><Link to="solutions" smooth={true} offset={-200} duration={500}>Solutions</Link></li>
+          <li><Link to="projects" smooth={true} offset={-50} duration={500}>Projects</Link></li>
+          <li><Link to="about" smooth={true} offset={-100} duration={500}>About us</Link></li>
+          </ul>
+        </div>
         <div className='hidden md:flex pr-4'>
           <button className='px-8 py-3' onClick={initHashconnect}>Connect Wallet</button>
         </div>
