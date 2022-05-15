@@ -48,14 +48,6 @@ export default function Project({ project, solution, organization }){
         return (
             <div>
                 <ProjectsSingle solution={solution} project={project} organization={organization}/>
-                {/* {saveData.pairedAccounts[0] == organization[0].wallet_address ? (
-                    <div>
-                        Your Organization
-                    </div>
-                ) : (
-                    <div>
-                    </div>
-                )} */}
             </div>
         )
     } else {
