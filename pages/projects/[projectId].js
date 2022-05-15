@@ -2,6 +2,7 @@ import { supabase } from "../../utils/client";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import ProjectsSingle from "../../components/ProjectsSingle";
+import { Hbar } from "@hashgraph/sdk";
 import { createProjectNFT, getProjectInfo, claimHBAR, mintProjectNFT } from "../../utils/hashconnectService";
 
 const fetchProject = async (projectId) => {
@@ -49,7 +50,8 @@ export default function Project({ project, solution, organization }){
         if(foundData){
             setSaveData(JSON.parse(foundData));
         }
-        console.log(typeof(project[0].mintPriceHBAR))
+        console.log(project[0].mintPriceHBAR)
+        console.log(new Hbar(project[0].mintPriceHBAR).toTinybars())
     },[])
     
     if(project[0]){
@@ -66,7 +68,7 @@ export default function Project({ project, solution, organization }){
                     </div>
                 )}
                 {project[0].id > 0 ? (<button onClick={() => createProjectNFT(
-                    (project[0].mintPriceHBAR),
+                    project[0].mintPriceHBAR,
                     project[0].maxNFTSupply,
                     organization[0].wallet_address,
                     `${solution[0].name} in ${project[0].country}`

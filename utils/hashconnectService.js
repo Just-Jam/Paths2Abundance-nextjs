@@ -67,10 +67,6 @@ const setUpEvents = async () => {
         saveData.pairedWalletData = pairingData;
         saveDataInLocalStorage();
     })
-
-    hashconnect.transactionEvent.once((transactionData) => {
-        console.log("Transaction success: ", transactionData)
-    })
 }
 
 const saveDataInLocalStorage = () => {
@@ -195,7 +191,8 @@ const getPATHBalance = async() => {
         
     let res = await getBalanceTx.execute(client)
     let value = res.getUint256().toNumber() * 1e-8
-    console.log(value)
+    saveData.pathTokenBalance = value
+    saveDataInLocalStorage();
     return value
 }
 
@@ -215,7 +212,6 @@ const claimHBAR = async(projectId) => {
     let res = await claimHBARTx.executeWithSigner(signer)
     console.log(res)
 }
-
 
 export {  
     initHashconnect, 

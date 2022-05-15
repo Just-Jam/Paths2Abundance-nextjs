@@ -4,13 +4,20 @@ import { getPATHBalance, clearPairings } from "../utils/hashconnectService";
 
 export default function UserInfo() {
 
-    const [saveData, setSaveData] = useState(null);
+    const [saveData, setSaveData] = useState({
+        topic: "",
+        pairingString: "",
+        privateKey: "",
+        pairedWalletData: null,
+        pairedAccounts: [],
+        pathTokenBalance: 0,
+    });
     const [pathTokenBalance, setPathTokenBalance] = useState(0);
 
 
     const getPathTokenBalance = async () => {
         let balance = await getPATHBalance();
-        setPathTokenBalance(balance);
+        setSaveData({ ...saveData, pathTokenBalance: balance });
     }
     useEffect(() => {
         let foundData = localStorage.getItem("hashconnectData")
@@ -25,7 +32,7 @@ export default function UserInfo() {
                 <div>
                     You are logged in
                     <h2>Wallet Address: {saveData.pairedAccounts[0]}</h2>
-                    <h3>Path Token Balance: {pathTokenBalance}</h3>
+                    <h3>Path Token Balance: {saveData.pathTokenBalance}</h3>
                 </div>
             ) :(
                 <div>You are not logged in</div>
