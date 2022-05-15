@@ -2,7 +2,7 @@ import { supabase } from "../../utils/client";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import ProjectsSingle from "../../components/ProjectsSingle";
-import { mintProjectNFT } from "../../utils/hashconnectService";
+import { createProjectNFT, getProjectInfo, claimHBAR, mintProjectNFT } from "../../utils/hashconnectService";
 
 const fetchProject = async (projectId) => {
     let { data: project, error } = await supabase
@@ -34,7 +34,14 @@ const fetchOrg = async (organizationId) => {
 
 export default function Project({ project, solution, organization }){
     const router = useRouter();
-    const [saveData, setSaveData] = useState(null);
+    const [saveData, setSaveData] = useState({
+        topic: "",
+        pairingString: "",
+        privateKey: "",
+        pairedWalletData: null,
+        pairedAccounts: [],
+        pathTokenBalance: 0,
+    });
     const [mintAmount, setMintAmount] = useState(0);
 
     useEffect(() => {
@@ -42,20 +49,40 @@ export default function Project({ project, solution, organization }){
         if(foundData){
             setSaveData(JSON.parse(foundData));
         }
+        console.log(typeof(project[0].mintPriceHBAR))
     },[])
     
     if(project[0]){
         return (
             <div>
                 <ProjectsSingle solution={solution} project={project} organization={organization}/>
-                {/* {saveData.pairedAccounts[0] == organization[0].wallet_address ? (
+                {saveData.pairedAccounts[0] == organization[0].wallet_address ? (
                     <div>
                         Your Organization
+                        <button onClick={() => claimHBAR(project[0].id)}>Claim HBAR</button>
                     </div>
                 ) : (
                     <div>
                     </div>
-                )} */}
+                )}
+                {project[0].id > 0 ? (<button onClick={() => createProjectNFT(
+                    (project[0].mintPriceHBAR),
+                    project[0].maxNFTSupply,
+                    organization[0].wallet_address,
+                    `${solution[0].name} in ${project[0].country}`
+                )}>createProjectNFT</button>
+                ) : (
+                    <div>
+                        <button onClick={() => mintProjectNFT(
+                            project[0].id,
+                            project[0].mintPriceHBAR,
+                            1
+                        )}>Mint 1 Project NFT</button>
+                    </div>
+                )}
+                
+
+                <button onClick={() => getProjectInfo(project[0].id)}>getProjectInfo</button>
             </div>
         )
     } else {
