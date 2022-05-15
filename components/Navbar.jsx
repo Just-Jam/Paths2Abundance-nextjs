@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import Link from 'next/link'
-
+import Image from 'next/image'
 import { MenuIcon, XIcon } from '@heroicons/react/outline';
 import { navLinks } from '../utils/data';
+import logo from '../public/p2a-logo.png'
 
 
 const Navbar = ({ initHashconnect }) => {
@@ -17,7 +18,10 @@ const Navbar = ({ initHashconnect }) => {
       <div className='px-2 flex justify-between items-center w-full h-full'>
         <nav>
           <div className='flex items-center'>
-            <h1 className='text-3xl font-bold mr-4 sm:text-4xl'>P2A</h1>
+          <div className='w-20'>
+          <Image src={logo} />
+
+          </div>
             <ul className='hidden md:flex'>
               <li><Link href="/" activeClass="active" spy={true} smooth={true} duration={500}><a>Home</a></Link></li>
               <li><Link href="/solutions" activeClass="active" spy={true} smooth={true} offset={-200} duration={500}><a>Solutions</a></Link></li>

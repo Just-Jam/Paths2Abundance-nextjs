@@ -1,6 +1,7 @@
 import React from 'react'
 
-import bgImg from '../assets/herombg.gif'
+import Image from 'next/image'
+import bgImg from '../public/herombg.gif'
 
 const Hero = () => {
   return (
@@ -14,8 +15,7 @@ const Hero = () => {
                 <button className='py-3 px-6 sm:w-[60%] my-4'>Make a Donation</button>
             </div>
             <div>
-                <img className='w-full' src={bgImg} alt="/" />
-                
+                <img className='w-full' src={bgImg} />
             </div>
         </div>
     </div>
