@@ -3,11 +3,6 @@ import { initHashconnect } from '../utils/hashconnectService';
 
 import React, { useState } from 'react';
 
-
-import { MenuIcon, XIcon } from '@heroicons/react/outline';
-import { navLinks } from '../utils/data';
-import { Link , animateScroll as scroll, scroller} from 'react-scroll'
-
 export default function Layout({ children }) {
     return (
         <>

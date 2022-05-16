@@ -1,8 +1,10 @@
-import { Hbar, HbarUnit } from "@hashgraph/sdk";
+import { supabase } from '../utils/client';
+import UserInfoComponent from '../components/UserInfoComponent' 
 import { useEffect, useState } from "react";
 import { getPATHBalance, clearPairings } from "../utils/hashconnectService";
 
-export default function UserInfo() {
+
+export default function Profile({ Projects, OrgWallets }) {
 
     const [saveData, setSaveData] = useState({
         topic: "",
@@ -18,29 +20,51 @@ export default function UserInfo() {
         let balance = await getPATHBalance();
         setSaveData({ ...saveData, pathTokenBalance: balance });
     }
+
+    const getUserNFTInfo = async (projectId) => {
+
+    }
+
     useEffect(() => {
-        console.log(userNFTs)
         let foundData = localStorage.getItem("hashconnectData")
         if(foundData){
-            let userNFTData = localStorage.getItem("userNFTs")
             setSaveData(JSON.parse(foundData))
-            if(userNFTData != null){setUserNFTs(JSON.parse(userNFTData))}
+            // let userNFTData = JSON.parse(localStorage.getItem("userNFTs"))
+            // if(userNFTData != null){
+            //     let userNFTArray =[]
+            //     for(let i = 0; i < userNFTData.length; i++){
+            //         if(userNFTData[i].accountId == saveData.pairedAccounts[0]){
+            //             userNFTArray.push(userNFTData[i])
+            //         }
+            //     }
+            //     setUserNFTs(userNFTArray)
+            // }
+
+            
         }
+        setUserNFTs([
+            {accountId: "0.0.34204037", projectId: 1},
+            {accountId: "0.0.34204037", projectId: 2}
+        ])
+        console.log("UserNFTs: ", userNFTs)
+        console.log(OrgWallets)
     },[])
     return (
         <div>
-            <h1><b>UserInfo</b></h1>
             {saveData != null ? (
                 <div>
-                    You are logged in
-                    <h2>Wallet Address: {saveData.pairedAccounts[0]}</h2>
-                    <h3>Path Token Balance: {saveData.pathTokenBalance}</h3>
+                    <UserInfoComponent saveData={saveData} OrgWallets={OrgWallets}/>
                     <h3><b>Your NFTs:</b></h3>
                     {userNFTs.length > 0 ? (
                         <div>
                             {userNFTs.map(nft =>{
-                                <div key={nft.id}>
-                                    <h4>{nft.name}</h4>
+                                <div key={nft}>
+                                    {nft.accountId == saveData.pairedAccounts[0] ? (
+                                        <h3>Project ID: {nft.projectId}</h3>
+                    
+                                    ) : (
+                                        <></>
+                                    )}
                                 </div>
                             })}
                         </div>
@@ -53,9 +77,45 @@ export default function UserInfo() {
             ) :(
                 <div>You are not logged in</div>
             ) }
-            <button onClick={() => console.log(saveData)}>Get saveData</button>
-            <button onClick={() => getPathTokenBalance()}>Get Path Balance</button>
+            <button onClick={() => getPathTokenBalance()}>Update PATH Balance</button>
             <button onClick={() => clearPairings()}>Clear Pairings</button>
         </div>
     );
 }
+
+export async function getServerSideProps() {
+  
+    const fetchProjects = async () => {
+      let { data: Projects, error } = await supabase
+        .from('Projects')
+        .select(`
+        id,
+        solution_id,
+        organization_id,
+        budget_usd,
+        country,
+        project_duration_days,
+        status,
+        mintPriceHBAR,
+        maxNFTSupply,
+        Solutions(name, image_file_name),
+        Organizations(name)
+      `)
+        .order('id', { ascending: true })
+  
+      console.log(Projects)
+      return Projects
+    }
+
+    const fetchOrgWallets = async () => {
+        let { data: OrgWallets, error } = await supabase
+        .from('Organizations')
+        .select('wallet_address')
+        return OrgWallets
+    }
+
+    const Projects = await fetchProjects();
+    const OrgWallets = await fetchOrgWallets();
+  
+    return { props: { Projects, OrgWallets } }
+  }
