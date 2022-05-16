@@ -1,0 +1,105 @@
+// Paths2Abundance Simplified Database - 2022 05 08
+// reference for dbml: https://www.dbml.org/docs/#schema-definition
+
+Table Solutions as ss {
+id int8 [primary key, increment, note: 'ex: 1, meaning S001, it will increment 2, 3, for S002, S003, ...']
+image_file varchar [note: 'ex: S001.jpg']
+name varchar [note: 'ex: Fog catchers']
+category varchar [note: 'ex: Water']
+nature varchar [note: 'ex: Generating']
+summary varchar [note: 'ex: Water generation using nets in misty locations']
+estimated_cost_usd float8 [note: 'ex: 2000']
+cost_breakdown varchar [note: 'ex: 200 USD for each net, 10 nets minimum, 2000 USD total']
+information_source varchar [note: 'ex: https://youtu.be/YxRONAZoMDk']
+application_scenarios varchar [note: 'ex: Higher elevated remote locations with myst, or very mysty locations']
+applicable_in_city bool [note: 'ex: false']
+applicable_in_nature bool [note: 'ex: true']
+low_tech int8 [note: 'ex: 10']
+simplicity int8  [note: 'ex: 8']
+low_cost int8  [note: 'ex: 9']
+portability int8 [note: 'ex: 8']
+versatility int8 [note: 'ex: 7']
+local_materials_required varchar [note: 'ex: Wood poles, simple handyman tools like hammer and nails']
+labor_hours_required int8 [note: 'ex: empty for NotFound']
+product_company_name varchar [note: 'ex: empty for NotFound']
+product_webpage varchar [note: 'ex: empty for NotFound']
+other_info text [note: 'ex: S001.docx, empty for NotFound'] 
+// comments under the source videos are readh andanything useful found into a separate Word file with this name
+applied_by_organizations varchar [note: 'ex: Water from Air Foundation, Boon Lay Goodness Movement']
+}
+
+
+Table Organizations as rr {
+id int8 [primary key, increment, note: 'ex: 1, meaning R001, for Water from Air Foundation, will increment by one']
+wallet_address  varchar  [note: 'ex: 0x....44m, different wallet address for each organization']
+name varchar [note: 'ex: Water from Air Foundation']
+image_file varchar [note: 'ex: D001.jpg']
+website varchar [note: 'ex: https://www.waterfromairfoundation.org']
+country varchar [note: 'ex: Turkiye']
+active bool [note: 'ex: true']
+other_info text [note: 'ex: S001.docx, empty for NotFound'] 
+}
+
+
+Table Projects as pp {
+id int8 [primary key, increment, note: 'ex: 1 for P001, it will increment to 2, 3, ... for P002, P003, ...']
+solution_id int8 [ref: < Solutions.id, note: 'ex: 1 for solution S001, it will increment 2, 3,... for S002, S003, ...']
+organization_id int8 [ref: < Organizations.id, note: 'ex: 1 for organization R001, which is Water from Air Foundation']
+country varchar [note: 'ex: Turkiye, country where the project will be applied']
+budget_usd float8 [note: 'ex: 3050.75']
+project_duration_days int8 [note: 'ex: 30'] // number of days that the Organization has to complete the project, once it claims the donations from P2A
+mintPriceHBAR float8 [note: 'ex: 1000; donation amount in HBAR to mint a single donation NFT']
+maxNFTSupply int8 [note: 'ex: 27; max number of donation NFTs for completion the full donation for the solution']
+other_info text [note: 'ex: S001.docx, empty for NotFound'] 
+status varchar [note: 'ex: UnderReview; Possible Values: UnderReview, Rejected, Accepted, Initiated, Uninitiated, Completed, Incomplete'] 
+date_time_timezone timestamptz [note: 'ex: 2022-05-08 07:07:07.555555-05:00; Date and time, including time zone; check https://www.cockroachlabs.com/docs/stable/timestamp.html for documentation']  
+}
+
+
+Table Donors as dd {
+id int8 [primary key, increment, note: 'ex: 1 for D001, will increment 2, 3, ... for D002, D003, ...']
+wallet_address  varchar  [note: 'ex: 0x....68t, different wallet address for each donor']
+}
+
+
+Table Donations as nn {
+id int8 [primary key, increment, note: 'ex: 1 for donation N001, will increment to 2, 3, ... for donations N002, D003, ...']
+donor_id int8 [ref: < Donors.id, note: 'ex: 1 for donor D001']
+project_id int8 [ref: < Projects.id, note: 'ex: 1 for project P001']
+proof_of_completion_file varchar [note: 'ex: water from air - adana project - Final report. pdf'] 
+project_completion_date_time_timezone timestamptz [note: 'ex: 2022-05-08 07:07:07.555555-05:00; Date and time, including time zone; check https://www.cockroachlabs.com/docs/stable/timestamp.html for documentation']  
+}
+
+
+Table Governors as gg {
+id int8 [primary key, increment, note: 'ex: 1 for governor G001']
+wallet_address  varchar  [note: 'ex: 0x....68t, different wallet address for each governor'] 
+}
+
+
+Table SingleVotes as singlevote {
+id int8 [primary key, increment, note: 'ex: 1 for vote V001']
+project_id int8 [ref: < Donors.id, note: 'ex: 1 for proposal PL001']
+// VotingGovernorID is the ID of the governor who is voting for the proposal
+governor_id int8 [ref: < Governors.id, note: 'ex: 1 for VotingGovernor G001, empty if not relevant'] // the Governor that votes
+vote_value int8 [note: 'ex: either of 0 or 1, where 0 is reject, 1 is accept/approve']
+date_time_timezone timestamptz [note: 'ex: 2022-05-08 08:08:08.555555-05:00; Date and time, including time zone; check https://www.cockroachlabs.com/docs/stable/timestamp.html for documentation']  
+}
+
+
+Table Decisions as decision {
+id int8 [primary key, increment, note: 'ex: 1 for decision E001']
+project_id int8 [ref: < Donors.id, note: 'ex: 1 for proposal PL001']
+voting_result float8 [note: 'ex: 66.67, when 2 accept and 1 reject votes out of 3 voting governors, a percentage that is the percentage of accept votes among all the SingleVotes for that proposal']
+is_project_accepted bool [note: 'ex: true']
+date_time_timezone timestamptz [note: 'ex: 2022-05-08 11:11:11.555555-05:00; Date and time, including time zone; check https://www.cockroachlabs.com/docs/stable/timestamp.html for documentation']
+}
+
+
+Table SystemConstants as constant {
+min_perc_vote float8  [note: 'ex: 80; between 50 and 100, this is the percentage of votes required by a proposal to pass']
+path_reward_per_vote int8  [note: 'ex: 1, this is the number of PATH tokens distributed to each governor each time they submit a vote']
+hours_to_vote int8  [note: 'ex: 72, this is the number of hours given to Governors to submit a vote for a proposal, once they are invited to vote']
+days_to_claim_donation int8  [note: 'ex: 7, this is the number of days given to an Organization to claim the donation and start the project']
+days_to_complete_project int8  [note: 'ex: 30, this is the number of days given to an Organization to complete the project and submit the proof of completion report for a project, after they claimed the donation']
+}

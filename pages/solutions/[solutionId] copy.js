@@ -1,28 +1,30 @@
 import { supabase } from "../../utils/client";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import SolutionsSingle from "../../components/SolutionsSingle";
-
 
 const getSolution = async (solutionId) => {
-    let { data: solution, error } = await supabase
+    let { data: Solutions, error } = await supabase
     .from('Solutions')
     .select('*')
     .eq('id', solutionId)
-    return solution
+    return Solutions
 }
 
-export default function Solution({ solution }){
+export default function Solution({ solutionData }){
     const router = useRouter();
     const { solutionId } = router.query;
 
     useEffect(() => {
-        console.log(solution)
+        console.log(solutionData)
     },[])
     
-    if(solution[0]){
+    if(solutionData[0]){
         return (
-            <SolutionsSingle solution={solution}/>
+            <div>
+                <h1>Solution {solutionId}</h1>
+                <h2>Name: {solutionData[0].name}</h2>
+                <p>Summary: {solutionData[0].summary}</p>
+            </div>
         )
     } else {
         return (
@@ -33,10 +35,10 @@ export default function Solution({ solution }){
 
 export async function getServerSideProps(context) {
 
-    const solution = await getSolution(context.params.solutionId)
+    const solutionData = await getSolution(context.params.solutionId)
 
     return {
-        props: { solution }, // will be passed to the page component as props
+        props: { solutionData }, // will be passed to the page component as props
     }
 }
 
