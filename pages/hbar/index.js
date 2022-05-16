@@ -38,6 +38,7 @@ export default function HbarDisplay({ hbarData }) {
 export async function getServerSideProps() {
     const data = await fetch('https://api.coingecko.com/api/v3/coins/hedera-hashgraph/tickers')
     const hbarData = await data.json();
+    // const hbarUSDPrice = hbarData.converted_last.usd
 
     return {
         props: { hbarData }

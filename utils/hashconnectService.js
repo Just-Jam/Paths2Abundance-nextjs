@@ -27,6 +27,8 @@ let saveData = {
     pathTokenBalance: 0,
 }
 
+let userNFTs = []
+
 const appMetadata = {
     name: "Paths2Abundance",
     description: "Paths2Abundance",
@@ -74,6 +76,11 @@ const saveDataInLocalStorage = () => {
     localStorage.setItem("hashconnectData", data)
 }
 
+const saveUserNFTData = () => {
+    let data = JSON.stringify(userNFTs);
+    localStorage.setItem("userNFTs", data)
+}
+
 const clearPairings = () => {
     saveData.pairedAccounts = [];
     saveData.pairedWalletData = undefined;
@@ -83,27 +90,25 @@ const clearPairings = () => {
 const loadLocalData = () => {
     let foundData = localStorage.getItem("hashconnectData")
     if(foundData){
+        let userNFTData = localStorage.getItem("userNFTs")
         saveData = JSON.parse(foundData);
+        if(userNFTData != null){userNFTs = JSON.parse(userNFTData)}
         console.log("Found local data", saveData)
+        console.log("Found local userNFTs", userNFTs)
         return true;
     }
     else return false;
 }
 
 //Works
-const getBalance = async () => {
-    let HashConnectProvider = hashconnect.getProvider("testnet", saveData.topic, saveData.pairedAccounts[0])
-    let balance = await HashConnectProvider.getAccountBalance(saveData.pairedAccounts[0]);
-    console.log(balance)
-}
-
-//dunno if Works
 const createProjectNFT = async(mintPriceHBAR, maxSupply, orgWallet, name) => {
     console.log("Creating Project NFT")
     let provider = hashconnect.getProvider("testnet", saveData.topic, saveData.pairedAccounts[0])
     let signer = hashconnect.getSigner(provider)
     const address = AccountId.fromString(orgWallet).toSolidityAddress()
     console.log(address)
+    console.log(typeof(maxSupply))
+    console.log(`0.0.${NFTID.contractID.num.low}`)
     const createProjectTx = await new ContractExecuteTransaction()
         .setContractId(`0.0.${NFTID.contractID.num.low}`)
         .setGas(1000000) //0.45 Hbar
@@ -143,7 +148,34 @@ const getProjectInfo = async(projectId) => {
         .execute(client)
 
     let res = abiInterface.decodeFunctionResult("getProject", getProjectInfoTx.bytes)
-    console.log(res)
+    console.log(res[0])
+    return res[0]
+}
+
+const getProjectTotalSupply = async(projectId) => {
+    const accountId = process.env.NEXT_PUBLIC_ACCOUNTID
+    const privateKey = process.env.NEXT_PUBLIC_PVKEY
+
+    if (accountId == null ||
+        privateKey == null ) {
+        throw new Error("Environment variables myAccountId and myPrivateKey must be present");
+    }
+    const client = Client.forTestnet();
+    client.setOperator(accountId, privateKey);
+    const getTotalSupplyTx = await new ContractCallQuery()
+        .setContractId(`0.0.${NFTID.contractID.num.low}`)
+        .setGas(1000000) //0.45 Hbar
+        .setFunction(
+            "totalSupply",
+            new ContractFunctionParameters()
+            .addUint256(projectId)
+        )
+        .setQueryPayment(new Hbar(1))
+        .execute(client)
+
+    let res = getTotalSupplyTx.getUint256().toNumber()
+    console.log("NFT supply: ", res)
+    return res
 }
 
 const mintProjectNFT = async(projectId, mintPriceHBAR, mintAmount) => {
@@ -165,6 +197,14 @@ const mintProjectNFT = async(projectId, mintPriceHBAR, mintAmount) => {
     
     let res = await mintNFTTx.executeWithSigner(signer)
     console.log(res)
+    //add nfts to local storage
+    for(let i = 0; i < mintAmount; i++){
+        userNFTs.push({
+            accountId: saveData.pairedAccounts[0],
+            projectId: projectId,
+        })
+    }
+    saveUserNFTData();
 }
 
 const getPATHBalance = async() => {
@@ -191,6 +231,7 @@ const getPATHBalance = async() => {
         
     let res = await getBalanceTx.execute(client)
     let value = res.getUint256().toNumber() * 1e-8
+    console.log(value)
     saveData.pathTokenBalance = value
     saveDataInLocalStorage();
     return value
@@ -222,4 +263,5 @@ export {
     getProjectInfo,
     claimHBAR,
     loadLocalData,
+    getProjectTotalSupply
 }

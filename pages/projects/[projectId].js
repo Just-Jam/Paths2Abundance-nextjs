@@ -2,8 +2,7 @@ import { supabase } from "../../utils/client";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import ProjectsSingle from "../../components/ProjectsSingle";
-import { Hbar } from "@hashgraph/sdk";
-import { createProjectNFT, getProjectInfo, claimHBAR, mintProjectNFT } from "../../utils/hashconnectService";
+import { createProjectNFT, claimHBAR } from "../../utils/hashconnectService";
 
 const fetchProject = async (projectId) => {
     let { data: project, error } = await supabase
@@ -43,15 +42,12 @@ export default function Project({ project, solution, organization }){
         pairedAccounts: [],
         pathTokenBalance: 0,
     });
-    const [mintAmount, setMintAmount] = useState(0);
 
     useEffect(() => {
         let foundData = localStorage.getItem("hashconnectData")
         if(foundData){
             setSaveData(JSON.parse(foundData));
         }
-        console.log(project[0].mintPriceHBAR)
-        console.log(new Hbar(project[0].mintPriceHBAR).toTinybars())
     },[])
     
     if(project[0]){
@@ -60,14 +56,15 @@ export default function Project({ project, solution, organization }){
                 <ProjectsSingle solution={solution} project={project} organization={organization}/>
                 {saveData.pairedAccounts[0] == organization[0].wallet_address ? (
                     <div>
-                        Your Organization
-                        <button onClick={() => claimHBAR(project[0].id)}>Claim HBAR</button>
+                        <h5 className="text-gray-900 text-xl py-5 font-medium mb-2">Your Organization</h5>
+                        <button className="block bg-blue-500 text-white font-bold p-4 rounded-lg"
+                        onClick={() => claimHBAR()}>Claim HBAR Donations</button>
                     </div>
                 ) : (
                     <div>
                     </div>
                 )}
-                {project[0].id > 0 ? (<button onClick={() => createProjectNFT(
+                {project[0].id > 9 ? (<button onClick={() => createProjectNFT(
                     project[0].mintPriceHBAR,
                     project[0].maxNFTSupply,
                     organization[0].wallet_address,
@@ -75,16 +72,8 @@ export default function Project({ project, solution, organization }){
                 )}>createProjectNFT</button>
                 ) : (
                     <div>
-                        <button onClick={() => mintProjectNFT(
-                            project[0].id,
-                            project[0].mintPriceHBAR,
-                            1
-                        )}>Mint 1 Project NFT</button>
                     </div>
                 )}
-                
-
-                <button onClick={() => getProjectInfo(project[0].id)}>getProjectInfo</button>
             </div>
         )
     } else {
@@ -106,6 +95,10 @@ export async function getServerSideProps(context) {
         solution = []
         organization = []
     }
+
+    const hbar = await fetch('https://api.coingecko.com/api/v3/coins/hedera-hashgraph/tickers')
+    const hbarData = await hbar.json();
+    console.log("HBAR Data: ", hbar)
 
     return {
         props: { project, solution, organization }, // will be passed to the page component as props

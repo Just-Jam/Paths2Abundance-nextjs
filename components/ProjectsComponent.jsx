@@ -12,14 +12,14 @@ function ProjectsComponent({ Projects }) {
                             <p className="text-xl text-gray-500">Here are some of our main projects</p>
                         </div>
                     </div>
-                    <div class="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3">
+                    <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3">
                         {Projects.map(project => {
                             return (
                                 <div key={project.id} className="w-full border border-gray-200 rounded-lg shadow-sm">
                                     <div className="flex justify-center">
                                         <div className="rounded-lg shadow-lg bg-white max-w-sm">
                                             <a href="#!">
-                                                <img class="rounded-t-lg" src={project.Solutions.image_file_name} alt="" />
+                                                <img className="rounded-t-lg" src={project.Solutions.image_file_name} alt="" />
                                             </a>
                                             <div className="p-6">
                                                 <h5 className="text-gray-900 text-xl font-medium mb-2">{project.Solutions.name} in {project.country}</h5>
@@ -29,7 +29,7 @@ function ProjectsComponent({ Projects }) {
                                                 <div className="px-6 pt-1 pb-2">
                                                     <span className="inline-block bg-slate-100 rounded px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">{project.country}</span>
                                                 </div>
-                                                <p class="text-gray-900 text-l font-small mb-2">Amount to Raise: ${project.budget_usd}</p>
+                                                <p className="text-gray-900 text-l font-small mb-2">Amount to Raise: ${project.budget_usd}</p>
                                                 <button type="button" onClick={() => router.push(`/projects/${project.id}`)} className=" inline-block px-20 py-4 bg-transparent text-blue-700 font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-100 hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">Find Out More</button>
                                             </div>
                                         </div>

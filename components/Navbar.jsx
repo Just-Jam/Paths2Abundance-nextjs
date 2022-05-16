@@ -27,7 +27,7 @@ const Navbar = ({ initHashconnect }) => {
               <li><Link href="/solutions" activeClass="active" spy={true} smooth={true} offset={-200} duration={500}><a>Solutions</a></Link></li>
               <li><Link href="/projects" activeClass="active" spy={true} smooth={true} offset={-50} duration={500}><a>Projects</a></Link></li>
               <li><Link href="/organizations" activeClass="active" spy={true} smooth={true} offset={-100} duration={500}><a>Organizations</a></Link></li>
-              <li><Link href="/userInfo" activeClass="active" spy={true} smooth={true} offset={-100} duration={500}><a>User Info</a></Link></li>
+              <li><Link href="/profile" activeClass="active" spy={true} smooth={true} offset={-100} duration={500}><a>Profile</a></Link></li>
             </ul>
           </div>
         </nav>
@@ -45,7 +45,7 @@ const Navbar = ({ initHashconnect }) => {
         <li className='border-b-2 border-zinc-300 w-full'><Link onClick={handleClose} href="/solutions" smooth={true} offset={-200} duration={500}>Solutions</Link></li>
         <li className='border-b-2 border-zinc-300 w-full'><Link onClick={handleClose} href="/projects" smooth={true} offset={-50} duration={500}>Projects</Link></li>
         <li className='border-b-2 border-zinc-300 w-full'><Link onClick={handleClose} href="/organizations" smooth={true} offset={-100} duration={500}>Organizations</Link></li>
-        <li className='border-b-2 border-zinc-300 w-full'><Link onClick={handleClose} href="/userInfo" smooth={true} offset={-50} duration={500}>User Info</Link></li>
+        <li className='border-b-2 border-zinc-300 w-full'><Link onClick={handleClose} href="/profile" smooth={true} offset={-50} duration={500}>Profile</Link></li>
         <div className='flex flex-col my-4'>
           <button className='bg-transparent text-indigo-600 px-8 py-3 mb-4' onClick={initHashconnect}>Connect Wallet</button>
           <button className='px-8 py-3'>Submit A project</button>

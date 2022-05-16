@@ -1,14 +1,16 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
-import { mintProjectNFT } from '../utils/hashconnectService'
+import { mintProjectNFT, getProjectTotalSupply } from '../utils/hashconnectService'
 
-function ProjectsSingle({ project, solution, organization }) {
+function ProjectsSingle({ project, solution, organization}) {
 
   const [mintAmount, setMintAmount] = useState(0)
+  const [nftSupply, setNftSupply] = useState(0)
 
-  useEffect(() => {
-    console.log(mintAmount)
-  },[mintAmount])
+  const getNFTSupply = async () => {
+    const supply = await getProjectTotalSupply(project[0].id)
+    setNftSupply(supply)
+  }
 
   return (
     <div>
@@ -28,6 +30,8 @@ function ProjectsSingle({ project, solution, organization }) {
         <div className="mb-5">
           <h5 className="text-gray-900 text-xl font-medium mb-2">NFT Mint Price: {project[0].mintPriceHBAR} HBAR</h5>
           <h5 className="text-gray-900 text-xl font-medium mb-2">NFT Max Supply: {project[0].maxNFTSupply}</h5>
+          <h5 className="text-gray-900 text-xl font-medium mb-2">NFT Current Supply: {nftSupply}</h5>
+          <button onClick={() => getNFTSupply()}>Get Latest NFT Supply</button>
           <p className="text-gray-700 text-base mb-2"> Your will receive 1 PATH token for each HBAR donated </p>
             <input id="amount" name="amount" 
             placeholder="NFTs to mint" 
