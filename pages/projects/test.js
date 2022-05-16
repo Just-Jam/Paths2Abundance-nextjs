@@ -9,6 +9,8 @@ import { useState } from 'react'
 
 
 const initialState = { solution_id: '', organization_id: '', budget_usd: '', other_info: '', country: '', project_duration_days: '', status: '' }
+
+
 export default function Projects({ Projects }) {
   useEffect(() => {
     console.log(Projects)
@@ -51,20 +53,20 @@ export default function Projects({ Projects }) {
     else {
       alert('Please fill in all fields')
     }
-    async function createNewProject() {
-      if (!solution_id || !organization_id || !country) return
+    // async function createNewProject() {
+    //   if (!solution_id || !organization_id || !country) return
 
-      let { data, error } = await supabase
-        .from('Projects')
-        .insert({ solution_id: newProject.solution_id, organization_id: newProject.organization_id, budget_usd: newProject.budget_usd, other_info: newProject.other_info, country: newProject.country, project_duration_days: newProject.project_duration_days, status: newProject.status })
-        .single();
+    //   let { data, error } = await supabase
+    //     .from('Projects')
+    //     .insert({ solution_id: newProject.solution_id, organization_id: newProject.organization_id, budget_usd: newProject.budget_usd, other_info: newProject.other_info, country: newProject.country, project_duration_days: newProject.project_duration_days, status: newProject.status })
+    //     .single();
 
-      console.log(data, error)
+    //   console.log(data, error)
 
-      router.push(`/projects`)
+    //   router.push(`/projects`)
 
 
-    }
+    // }
 
 
     return (
@@ -164,6 +166,10 @@ export async function getServerSideProps() {
   return { props: { Solutions, Organizations, Projects } }
 
 }
+
+
+
+
 
 
 
