@@ -15,7 +15,6 @@ export default function Profile({ Projects, OrgWallets }) {
         pathTokenBalance: 0,
         recentDonatedProjects: []
     });
-    const [userNFTs, setUserNFTs] = useState([]);
 
     const getPathTokenBalance = async () => {
         let balance = await getPATHBalance();
@@ -27,50 +26,15 @@ export default function Profile({ Projects, OrgWallets }) {
         let foundData = localStorage.getItem("hashconnectData")
         if(foundData){
             setSaveData(JSON.parse(foundData))
-            // let userNFTData = JSON.parse(localStorage.getItem("userNFTs"))
-            // if(userNFTData != null){
-            //     let userNFTArray =[]
-            //     for(let i = 0; i < userNFTData.length; i++){
-            //         if(userNFTData[i].accountId == saveData.pairedAccounts[0]){
-            //             userNFTArray.push(userNFTData[i])
-            //         }
-            //     }
-            //     setUserNFTs(userNFTArray)
-            // }
-
-            
         }
-        setUserNFTs([
-            {accountId: "0.0.34204037", projectId: 1},
-            {accountId: "0.0.34204037", projectId: 2}
-        ])
-        console.log("UserNFTs: ", userNFTs)
-        console.log(OrgWallets)
     },[])
     return (
         <div>
             {saveData != null ? (
                 <div>
                     <UserInfoComponent saveData={saveData} OrgWallets={OrgWallets}/>
-                    <h3><b>Your NFTs:</b></h3>
-                    {userNFTs.length > 0 ? (
-                        <div>
-                            {userNFTs.map(nft =>{
-                                <div key={nft}>
-                                    {nft.accountId == saveData.pairedAccounts[0] ? (
-                                        <h3>Project ID: {nft.projectId}</h3>
+                    <h3><b>Recent Donations</b></h3>
                     
-                                    ) : (
-                                        <></>
-                                    )}
-                                </div>
-                            })}
-                        </div>
-                    ) : (
-                        <div>
-                            <h3>You do not own any NFTs</h3>
-                        </div>
-                    )}
                 </div>
             ) :(
                 <div>You are not logged in</div>

@@ -4,21 +4,21 @@ import React from 'react'
 
 function SubmitOrganization() {
   return (
-    <div class="bg-gray-100 min-h-screen flex items-center">
-      <div class="w-full">
-        <div class="space-y-12 md:text-center">
-          <div class="max-w-3xl pt-7 mb-10 space-y-5 sm:mx-auto sm:space-y-4">
-              <h2 class="relative text-4xl font-extrabold tracking-tight sm:text-5xl">Register your Organization</h2>
-                <p class="text-xl text-gray-500">Fill this form to register an organization.</p>
+    <div className="bg-gray-100 min-h-screen flex items-center">
+      <div className="w-full">
+        <div className="space-y-12 md:text-center">
+          <div className="max-w-3xl pt-7 mb-10 space-y-5 sm:mx-auto sm:space-y-4">
+              <h2 className="relative text-4xl font-extrabold tracking-tight sm:text-5xl">Register your Organization</h2>
+                <p className="text-xl text-gray-500">Fill this form to register an organization.</p>
                   </div>
             </div>
 
-              <div class="bg-white p-10 rounded-lg shadow md:w-3/4 mx-auto lg:w-1/2">
+              <div className="bg-white p-10 rounded-lg shadow md:w-3/4 mx-auto lg:w-1/2">
               <div>
 
                 {/* Organization IMAGE UPLOAD */}
 
-                  <div class="">
+                  <div className="">
                     <label for="name" class="block mb-2 font-bold text-gray-600">Organization Image</label>
                 
                   </div>
@@ -55,18 +55,18 @@ function SubmitOrganization() {
               
 
                 <form action="">
-                  <div class="mb-5">
-                    <label for="name" class="block mb-2 font-bold text-gray-600">Organization name</label>
+                  <div className="mb-5">
+                    <label for="name" className="block mb-2 font-bold text-gray-600">Organization name</label>
                     <input type="text" id="name" name="name" placeholder="Enter project name." class="border border-gray-300 shadow p-3 w-full rounded"/>
                   </div>
 
-                  <div class="mb-5">
-                    <label for="name" class="block mb-2 font-bold text-gray-600">About organization</label>
+                  <div className="mb-5">
+                    <label for="name" className="block mb-2 font-bold text-gray-600">About organization</label>
                     <input type="text" id="name" name="name" placeholder="" class="border border-gray-300 shadow p-3 py-10 w-full rounded"/>
                   </div>
 
-                  <div class="mb-5">
-                    <label for="country" class="block mb-2 font-bold text-gray-600">Country</label>
+                  <div className="mb-5">
+                    <label for="country" className="block mb-2 font-bold text-gray-600">Country</label>
                     <select id="country" name="country" autoComplete="country-name" className="mt-1 block w-full py-4 p-3  border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                         <option>United States</option>
                         <option>Philipines</option>
@@ -76,12 +76,12 @@ function SubmitOrganization() {
                       </select>
                   </div>
 
-                  <div class="mb-5">
-                    <label for="name" class="block mb-2 font-bold text-gray-600">Website</label>
+                  <div className="mb-5">
+                    <label for="name" className="block mb-2 font-bold text-gray-600">Website</label>
                     <input type="text" id="name" name="name" placeholder="Enter organization website" class="border border-gray-300 shadow p-3 w-full rounded"/>
                   </div>
                   
-                  <button class="block w-full bg-blue-500 text-white font-bold p-4 rounded-lg">Submit</button>
+                  <button className="block w-full bg-blue-500 text-white font-bold p-4 rounded-lg">Submit</button>
                 </form>
         </div>
       </div>

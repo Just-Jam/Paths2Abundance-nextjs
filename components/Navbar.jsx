@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link'
 import Image from 'next/image'
 import { MenuIcon, XIcon } from '@heroicons/react/outline';
-import logoAlt from '../public/logoAlt.png'
+import logoAlt from '../public/logoAltC.png'
 
 const Navbar = ({ initHashconnect }) => {
   const [nav, setNav] = useState(false)
@@ -23,6 +23,8 @@ const Navbar = ({ initHashconnect }) => {
               <Image src={logoAlt} />
             </div>
             <ul className='hidden md:flex'>
+              <li></li>
+              <h1 className='text-3xl font-bold mr-4 sm:text-4xl'>P2A</h1>
               <li><Link href="/" activeClass="active" spy={true} smooth={true} duration={500}><a>Home</a></Link></li>
               <li><Link href="/solutions" activeClass="active" spy={true} smooth={true} offset={-200} duration={500}><a>Solutions</a></Link></li>
               <li><Link href="/projects" activeClass="active" spy={true} smooth={true} offset={-50} duration={500}><a>Projects</a></Link></li>
