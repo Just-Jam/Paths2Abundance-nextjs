@@ -19,7 +19,7 @@ function SubmitProject() {
                 {/* PROJECT IMAGE UPLOAD */}
 
                   <div className="">
-                    <label for="name" className="block mb-2 font-bold text-gray-600">Project Image</label>
+                    <label htmlFor="name" className="block mb-2 font-bold text-gray-600">Project Image</label>
                 
                   </div>
                     <div className="mb-2 mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
