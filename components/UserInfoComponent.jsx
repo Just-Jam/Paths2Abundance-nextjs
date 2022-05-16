@@ -37,7 +37,11 @@ function UserInfoComponent({ saveData, OrgWallets }) {
                         <Image className='w-full' src={profileImg} />
                     </div>
                     <h1 class="text-gray-900 font-bold text-xl leading-8 my-1">{saveData.pairedAccounts[0]}</h1>
-                    <h3 class="text-gray-600 font-lg text-semibold leading-6">Donor/Organization</h3>
+                    {ifOrgWallet() == true ? (
+                        <h3 class="text-gray-600 font-lg text-semibold leading-6">Organization</h3>
+                    ) : (
+                        <h3 class="text-gray-600 font-lg text-semibold leading-6">Donor</h3>
+                    )}
                 
                     <ul
                         class="bg-gray-100 text-gray-600 hover:text-gray-700 hover:shadow py-2 px-3 mt-3 divide-y rounded shadow-sm">
@@ -49,12 +53,12 @@ function UserInfoComponent({ saveData, OrgWallets }) {
 
                         <li class="flex items-center font-medium py-3">
                             <span>Total Donations</span>
-                            <span class="ml-auto">3 HBAR</span>
+                            <span class="ml-auto">{saveData.pathTokenBalance} HBAR</span>
                         </li>
 
                         <li class="flex items-center font-medium py-3">
                             <span>Total Projects</span>
-                            <span class="ml-auto">3</span>
+                            <span class="ml-auto">1</span>
                         </li>
 
                     </ul>

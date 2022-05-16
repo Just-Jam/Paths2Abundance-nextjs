@@ -25,6 +25,7 @@ let saveData = {
     pairedWalletData: null,
     pairedAccounts: [],
     pathTokenBalance: 0,
+    recentDonatedProjects: []
 }
 
 let userNFTs = []

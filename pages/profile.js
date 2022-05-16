@@ -13,6 +13,7 @@ export default function Profile({ Projects, OrgWallets }) {
         pairedWalletData: null,
         pairedAccounts: [],
         pathTokenBalance: 0,
+        recentDonatedProjects: []
     });
     const [userNFTs, setUserNFTs] = useState([]);
 
@@ -21,9 +22,6 @@ export default function Profile({ Projects, OrgWallets }) {
         setSaveData({ ...saveData, pathTokenBalance: balance });
     }
 
-    const getUserNFTInfo = async (projectId) => {
-
-    }
 
     useEffect(() => {
         let foundData = localStorage.getItem("hashconnectData")
