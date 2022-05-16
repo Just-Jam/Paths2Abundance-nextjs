@@ -19,7 +19,7 @@ function SubmitOrganization() {
                 {/* Organization IMAGE UPLOAD */}
 
                   <div className="">
-                    <label for="name" class="block mb-2 font-bold text-gray-600">Organization Image</label>
+                    <label htmlFor="name" className="block mb-2 font-bold text-gray-600">Organization Image</label>
                 
                   </div>
                     <div className="mb-2 mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
@@ -56,17 +56,17 @@ function SubmitOrganization() {
 
                 <form action="">
                   <div className="mb-5">
-                    <label for="name" className="block mb-2 font-bold text-gray-600">Organization name</label>
-                    <input type="text" id="name" name="name" placeholder="Enter project name." class="border border-gray-300 shadow p-3 w-full rounded"/>
+                    <label htmlFor="name" className="block mb-2 font-bold text-gray-600">Organization name</label>
+                    <input type="text" id="name" name="name" placeholder="Enter project name." className="border border-gray-300 shadow p-3 w-full rounded"/>
                   </div>
 
                   <div className="mb-5">
-                    <label for="name" className="block mb-2 font-bold text-gray-600">About organization</label>
-                    <input type="text" id="name" name="name" placeholder="" class="border border-gray-300 shadow p-3 py-10 w-full rounded"/>
+                    <label htmlFor="name" className="block mb-2 font-bold text-gray-600">About organization</label>
+                    <input type="text" id="name" name="name" placeholder="" className="border border-gray-300 shadow p-3 py-10 w-full rounded"/>
                   </div>
 
                   <div className="mb-5">
-                    <label for="country" className="block mb-2 font-bold text-gray-600">Country</label>
+                    <label htmlFor="country" className="block mb-2 font-bold text-gray-600">Country</label>
                     <select id="country" name="country" autoComplete="country-name" className="mt-1 block w-full py-4 p-3  border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                         <option>United States</option>
                         <option>Philipines</option>
@@ -77,8 +77,8 @@ function SubmitOrganization() {
                   </div>
 
                   <div className="mb-5">
-                    <label for="name" className="block mb-2 font-bold text-gray-600">Website</label>
-                    <input type="text" id="name" name="name" placeholder="Enter organization website" class="border border-gray-300 shadow p-3 w-full rounded"/>
+                    <label htmlFor="name" className="block mb-2 font-bold text-gray-600">Website</label>
+                    <input type="text" id="name" name="name" placeholder="Enter organization website" className="border border-gray-300 shadow p-3 w-full rounded"/>
                   </div>
                   
                   <button className="block w-full bg-blue-500 text-white font-bold p-4 rounded-lg">Submit</button>
