@@ -1,6 +1,5 @@
 import Layout from '../layouts/layout'
 import '../styles/globals.css'
-import Link from 'next/link'
 
 import { initHashconnect } from '../utils/hashconnectService';
 import { useEffect } from 'react';

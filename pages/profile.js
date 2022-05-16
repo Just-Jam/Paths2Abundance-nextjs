@@ -21,7 +21,6 @@ export default function Profile({ Projects, OrgWallets }) {
         setSaveData({ ...saveData, pathTokenBalance: balance });
     }
 
-
     useEffect(() => {
         let foundData = localStorage.getItem("hashconnectData")
         if(foundData){
@@ -30,17 +29,14 @@ export default function Profile({ Projects, OrgWallets }) {
     },[])
     return (
         <div>
-            {saveData != null ? (
+            {saveData.pairedWalletData != null ? (
                 <div>
-                    <UserInfoComponent saveData={saveData} OrgWallets={OrgWallets}/>
-                    <h3><b>Recent Donations</b></h3>
-                    
+                    <UserInfoComponent saveData={saveData} OrgWallets={OrgWallets} Projects={Projects}/>
                 </div>
             ) :(
                 <div>You are not logged in</div>
             ) }
-            <button onClick={() => getPathTokenBalance()}>Update PATH Balance</button>
-            <button onClick={() => clearPairings()}>Clear Pairings</button>
+            
         </div>
     );
 }
