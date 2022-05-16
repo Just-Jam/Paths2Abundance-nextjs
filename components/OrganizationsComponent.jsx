@@ -8,7 +8,7 @@ function OrganizationsComponent({ Organizations }) {
                 <div className="max-w-6xl px-12 mx-auto text-center">
                     <div className="space-y-12 md:text-center">
                         <div className="max-w-3xl mb-10 space-y-5 sm:mx-auto sm:space-y-4">
-                            <h2 className="relative text-4xl font-extrabold tracking-tight sm:text-5xl">Our Partner Organizations</h2>
+                            <h2 className="relative text-4xl font-extrabold tracking-tight sm:text-5xl">Organizations partnered with us</h2>
                             <p className="text-xl text-gray-500">Here are some of our main partners</p>
                         </div>
                     </div>

@@ -77,6 +77,11 @@ const saveDataInLocalStorage = () => {
     localStorage.setItem("hashconnectData", data)
 }
 
+const saveUserNFTData = () => {
+    let data = JSON.stringify(userNFTs);
+    localStorage.setItem("userNFTs", data)
+}
+
 const clearPairings = () => {
     saveData.pairedAccounts = [];
     saveData.pairedWalletData = undefined;
@@ -86,7 +91,11 @@ const clearPairings = () => {
 const loadLocalData = () => {
     let foundData = localStorage.getItem("hashconnectData")
     if(foundData){
+        let userNFTData = localStorage.getItem("userNFTs")
         saveData = JSON.parse(foundData);
+        if(userNFTData != null){userNFTs = JSON.parse(userNFTData)}
+        console.log("Found local data", saveData)
+        console.log("Found local userNFTs", userNFTs)
         return true;
     }
     else return false;
@@ -189,11 +198,14 @@ const mintProjectNFT = async(projectId, mintPriceHBAR, mintAmount) => {
     
     let res = await mintNFTTx.executeWithSigner(signer)
     console.log(res)
-    
-    if(!saveData.recentDonatedProjects.includes(projectId)){
-        saveData.recentDonatedProjects.push(projectId)
-        saveDataInLocalStorage();
+    //add nfts to local storage
+    for(let i = 0; i < mintAmount; i++){
+        userNFTs.push({
+            accountId: saveData.pairedAccounts[0],
+            projectId: projectId,
+        })
     }
+    saveUserNFTData();
 }
 
 const getPATHBalance = async() => {

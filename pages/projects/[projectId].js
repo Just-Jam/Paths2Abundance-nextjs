@@ -55,7 +55,7 @@ export default function Project({ project, solution, organization }){
             <div>
                 <ProjectsSingle solution={solution} project={project} organization={organization}/>
                 {saveData.pairedAccounts[0] == organization[0].wallet_address ? (
-                    <div className="container px-4 mx-auto">
+                    <div>
                         <h5 className="text-gray-900 text-xl py-5 font-medium mb-2">Your Organization</h5>
                         <button className="block bg-blue-500 text-white font-bold p-4 rounded-lg"
                         onClick={() => claimHBAR()}>Claim HBAR Donations</button>
