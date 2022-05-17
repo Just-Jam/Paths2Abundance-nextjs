@@ -5,9 +5,20 @@
 - [**Slide Deck [pdf]**](https://github.com/Just-Jam/Paths2Abundance-nextjs/blob/main/doc/other/Paths2Abundance_Slide_Deck_v05g.pdf) compactly presents the project.
 - [**YouTube Video**](https://youtu.be/9bSamwXdDNc) is the demo video for the hackathon.
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+### Paths2Abundance (P2A) Main Window
+![Main Window](./img/Screen01.png)
 
-## Getting Started
+
+### Project Team
+
+Our team consists of professionals from varying backgrounds, united with the ethos of **creating value through innovation**.
+
+![Project Team](./img/Slide22.png) 
+
+
+## Setup: Getting Started
+
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 First, run the development server:
 
