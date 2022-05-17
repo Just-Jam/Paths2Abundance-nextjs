@@ -14,7 +14,7 @@ This documentation presents details on the Paths2Abundance (P2A) dapp and projec
 - [**Documentation**](https://github.com/Just-Jam/Paths2Abundance-nextjs/blob/main/doc/Documentation.md) describes the project and the dapp in extensive detail.
 - [**Database Design**](https://github.com/Just-Jam/Paths2Abundance-nextjs/blob/main/doc/Database.md) is presented, to serve as a template for future NGO projects in the future, to run under Hedera Hashgraph.
 - [**Slide Deck [pdf]**](https://github.com/Just-Jam/Paths2Abundance-nextjs/blob/main/doc/other/Paths2Abundance_Slide_Deck_v05g.pdf) compactly presents the project.
-- [**YouTube Video**](https://youtu.be/k6aQGtn5HS8) is the demo video for the hackathon.
+- [**YouTube Video**](https://youtu.be/9bSamwXdDNc) is the demo video for the hackathon.
 
 
 ## Index
