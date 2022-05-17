@@ -1,3 +1,5 @@
+![Logo](./doc/img/logo.png) 
+
 ## START HERE
 - [**Paths2Abundance (P2A) dapp**](https://paths2abundance-nextjs-just-jam.vercel.app/) is running live on the cloud. The dapp requires Hashpack wallet connection for full functionality.
 - [**Documentation**](https://github.com/Just-Jam/Paths2Abundance-nextjs/blob/main/doc/Documentation.md) describes the project and the dapp in extensive detail.
@@ -6,14 +8,14 @@
 - [**YouTube Video**](https://youtu.be/9bSamwXdDNc) is the demo video for the hackathon.
 
 ### Paths2Abundance (P2A) Main Window
-![Main Window](./img/Screen01.png)
+![Main Window](./doc/img/Screen01.png)
 
 
 ### Project Team
 
 Our team consists of professionals from varying backgrounds, united with the ethos of **creating value through innovation**.
 
-![Project Team](./img/Slide22.png) 
+![Project Team](./doc/img/Slide22.png) 
 
 
 ## Setup: Getting Started
